@@ -73,7 +73,7 @@ androidCoverageCheck {
     // set excluded targets
     excludes excludeFiles;
     // set coverage report path
-    xmlReports reportXmlPath
+    reportXml reportXmlPath
 }
 
 ```
