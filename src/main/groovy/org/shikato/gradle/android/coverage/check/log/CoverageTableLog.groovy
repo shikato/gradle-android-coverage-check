@@ -9,14 +9,15 @@ import org.shikato.gradle.android.coverage.check.util.DefaultValue
 import java.text.NumberFormat
 
 class CoverageTableLog {
-    private static final String INSTRUCTION = "  % INSTR ";
-    private static final String BRANCH = " % BRANCH ";
-    private static final String LINE = "   % LINE ";
-    private static final String METHOD = " % METHOD ";
-    private static final String COMPLEXITY = "  % COMPL ";
 
-    private static final String FILE      = "FILE                           ";
-    private static final String ALL_FILES = "All files                      ";
+    private static final String INSTRUCTION = "  % INSTR ";
+    private static final String BRANCH      = " % BRANCH ";
+    private static final String LINE        = "   % LINE ";
+    private static final String METHOD      = " % METHOD ";
+    private static final String COMPLEXITY  = "  % COMPL ";
+
+    private static final String FILE        = "FILE                           ";
+    private static final String ALL_FILES   = "All files                      ";
 
     public static enum Color {
         GREEN,
@@ -135,8 +136,7 @@ class CoverageTableLog {
     }
 
     private static Color getColorType(float rate, int threshold) {
-        if (threshold < 0) return Color.GREEN;
-        if (Float.compare(rate, threshold) >= 0) return Color.GREEN;
+        if (threshold < 0 || Float.compare(rate, threshold) >= 0) return Color.GREEN;
         if (Float.compare((float) (rate / threshold), 0.5F) > 0) return Color.YELLOW;
         return Color.RED;
     }

@@ -9,21 +9,22 @@ import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 class CoverageChecker {
 
     public static def check(Project project, CoverageAll coverage,
-                                 AndroidCoverageCheckExtension extension) {
+                            AndroidCoverageCheckExtension extension) {
         List<String> excludes = getExcludes(project, extension.getExcludesEntryDir(),
                 extension.getExcludesPath());
 
-        for (CoverageSourcefile sourcefile : coverage.getSourcefileList()) {
-            sourcefile.setIsExclude(isExclude(excludes,
-                    sourcefile.getPackageName() + "/" + sourcefile.getFileName()));
-            checkCoverageCounter(sourcefile, coverage, extension);
-        }
+        coverage.getSourcefileList().each {
+            it.setIsExclude(isExclude(excludes,
+                    it.getPackageName() + "/" + it.getFileName()));
+            checkCoverageCounter(it, coverage, extension);
+        };
 
         checkCoverageCounter(coverage, coverage, extension);
     }
 
     // TODO: 整理（ALlとsourcefileでoverloadするか、このまま合わせて処理するか）
-    private static def checkCoverageCounter(Coverage coverage, CoverageAll coverageAll, AndroidCoverageCheckExtension extension) {
+    private static
+    def checkCoverageCounter(Coverage coverage, CoverageAll coverageAll, AndroidCoverageCheckExtension extension) {
         boolean isHavingInstruction = false;
         boolean isHavingBranch = false;
 
@@ -97,7 +98,8 @@ class CoverageChecker {
         return excludes;
     }
 
-    private static Coverage setDefaultCounter(Coverage coverage, boolean isHavingInstruction, boolean isHavingBranch) {
+    private
+    static Coverage setDefaultCounter(Coverage coverage, boolean isHavingInstruction, boolean isHavingBranch) {
         List<CoverageCounter> counterList = coverage.getCounterList();
         if (!isHavingInstruction) {
             counterList.add(getInitCounter(Coverage.INSTRUCTION))
