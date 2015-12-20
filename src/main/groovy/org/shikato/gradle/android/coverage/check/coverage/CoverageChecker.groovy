@@ -69,6 +69,11 @@ class CoverageChecker {
 
     private static boolean isExclude(List<String> excludes, String path) {
         for (String exclude : excludes) {
+            println "--s--"
+            println exclude
+            println path
+            println "--e--"
+
             if (exclude.lastIndexOf(path)) return true;
         }
         return false;
@@ -86,6 +91,9 @@ class CoverageChecker {
 
                 @Override
                 void visitFile(FileVisitDetails fileDetails) {
+                    printn fileDetails.name
+                    printn fileDetails.path
+
                     File file = project.file(fileDetails.getFile());
                     if (!file.exists()) return;
                     if (excludes.contains(file.getPath())) return;
