@@ -1,7 +1,7 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
 
-String version = '0.0.1.0';
+String version = '0.0.2';
 String groupId = 'org.shikato.gradle.android.coverage.check';
 String artifatId = 'android-coverage-check';
 
@@ -34,7 +34,7 @@ uploadArchives {
 
 buildscript{
     dependencies {
-        classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.1.0'
+        classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.2'
     }
     repositories {
         maven { url uri('./repository') }
