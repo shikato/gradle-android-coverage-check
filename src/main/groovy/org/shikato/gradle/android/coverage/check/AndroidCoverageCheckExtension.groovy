@@ -19,25 +19,32 @@ class AndroidCoverageCheckExtension {
 
 
     // C0 minimum threshold
-    int instruction = 50;
+    int instruction = 0;
     // C1 minimum threshold
-    int branch = 50;
+    int branch = 0;
 
     // チェック対象外ファイル
-    def excludes(String entryDir, String[] path) {
+    void excludes(String[] path) {
+        excludesMap.put(PATH, path);
+    }
+    // チェック対象外ファイル
+    void excludes(String entryDir, String[] path) {
         excludesMap.put(ENTRY_DIR, entryDir);
         excludesMap.put(PATH, path);
     }
 
     // カバレッジレポート(report.xml)の場所
-    def xmlReports(String entryDir, String[] path) {
+    void xmlReports(String[] path) {
+        xmlReportsMap.put(PATH, path);
+    }
+    // カバレッジレポート(report.xml)の場所
+    void xmlReports(String entryDir, String[] path) {
         xmlReportsMap.put(ENTRY_DIR, entryDir);
         xmlReportsMap.put(PATH, path);
     }
 
     // 閾値を満たさなかった時にビルド失敗とするかどうか
     Boolean isBuildFailure = true;
-//    Boolean isBuildFailure = false;
 
     String getExcludesEntryDir() {
         return excludesMap.get(ENTRY_DIR);
