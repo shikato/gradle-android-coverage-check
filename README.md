@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.1'
+    classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.2'
 }
 ```
 Please, apply this plugin.
