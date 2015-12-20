@@ -1,7 +1,7 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
 
-String version = '0.0.5';
+String version = '0.0.6';
 String groupId = 'org.shikato.gradle.android.coverage.check';
 String artifatId = 'android-coverage-check';
 

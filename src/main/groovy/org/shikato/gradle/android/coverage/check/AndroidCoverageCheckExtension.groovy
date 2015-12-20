@@ -24,21 +24,21 @@ class AndroidCoverageCheckExtension {
     int branch = 0;
 
     // チェック対象外ファイル
-    void excludes(String[] path) {
+    public excludes(String[] path) {
         excludesMap.put(PATH, path);
     }
     // チェック対象外ファイル
-    void excludes(String entryDir, String[] path) {
+    public excludes(String entryDir, String[] path) {
         excludesMap.put(ENTRY_DIR, entryDir);
         excludesMap.put(PATH, path);
     }
 
     // カバレッジレポート(report.xml)の場所
-    void xmlReports(String[] path) {
+    public xmlReports(String[] path) {
         xmlReportsMap.put(PATH, path);
     }
     // カバレッジレポート(report.xml)の場所
-    void xmlReports(String entryDir, String[] path) {
+    public xmlReports(String entryDir, String[] path) {
         xmlReportsMap.put(ENTRY_DIR, entryDir);
         xmlReportsMap.put(PATH, path);
     }
