@@ -1,0 +1,35 @@
+apply plugin: 'groovy'
+apply plugin: 'maven'
+
+String version = '0.0.1';
+String groupId = 'org.shikato.gradle.android.coverage.check';
+String artifatId = 'android-coverage-check';
+
+
+dependencies {
+    compile gradleApi()
+    compile localGroovy()
+}
+
+def repo = new File(rootDir, './repository')
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository url: "file://${repo.absolutePath}"
+            pom.version = version
+            pom.groupId = groupId
+            pom.artifactId = artifatId
+        }
+    }
+}
+
+buildscript{
+    dependencies {
+        classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.1'
+    }
+    repositories {
+        maven { url uri('./repository') }
+    }
+}
+
+apply plugin: artifatId

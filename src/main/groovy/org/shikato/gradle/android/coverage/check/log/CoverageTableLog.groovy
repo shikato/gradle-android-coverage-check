@@ -1,0 +1,152 @@
+package org.shikato.gradle.android.coverage.check.log
+
+import org.gradle.api.Project
+import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
+import org.shikato.gradle.android.coverage.check.coverage.Coverage
+import org.shikato.gradle.android.coverage.check.coverage.CoverageAll
+import org.shikato.gradle.android.coverage.check.util.DefaultValue
+
+import java.text.NumberFormat
+
+class CoverageTableLog {
+    private static final String INSTRUCTION = "  % INSTR ";
+    private static final String BRANCH = " % BRANCH ";
+    private static final String LINE = "   % LINE ";
+    private static final String METHOD = " % METHOD ";
+    private static final String COMPLEXITY = "  % COMPL ";
+
+    private static final String FILE      = "FILE                           ";
+    private static final String ALL_FILES = "All files                      ";
+
+    public static enum Color {
+        GREEN,
+        YELLOW,
+        RED
+    }
+
+    private static int TRIM_SIZE = 3;
+
+    private static int maxFileColumnLength = DefaultValue.INT;
+    private static int maxInstructionColumnLength = DefaultValue.INT;
+    private static int maxBranchColumnLength = DefaultValue.INT;
+
+    public static def show(Project project, CoverageAll coverage,
+                           AndroidCoverageCheckExtension extension) {
+        setMaxLength();
+
+        String message = coverage.getReportPath() + "\n";
+        message += getBar();
+        message += getTitle();
+        message += getBar();
+
+        coverage.getSourcefileList().each() {
+            if (it.getIsExclude()) return;
+            message += getLine(it, extension, " " + it.getPackageName() + " > " + it.getFileName() + " ");
+        };
+
+        message += getBar();
+        message += getLine(coverage, extension, ALL_FILES);
+        message += getBar();
+
+        project.logger.lifecycle(message);
+    }
+
+    private static def setMaxLength() {
+        maxFileColumnLength = FILE.length();
+        maxInstructionColumnLength = BRANCH.length();
+        maxBranchColumnLength = BRANCH.length();
+    }
+
+    private static String padBeforeSpace(String target, int size) {
+        if (target.length() >= size) return target;
+        int difference = size - target.length();
+        return " " * difference + target;
+    }
+
+    private static String padAfterSpace(String target, int size) {
+        if (target.length() >= size) return target;
+        int difference = size - target.length();
+        return target + " " * difference;
+    }
+
+    private static String trimFileName(String target, int size) {
+        if (target.length() <= size) return target;
+        int difference = target.length() - size;
+        // +1はspace
+        target = target.substring(difference + TRIM_SIZE + 1, target.length());
+        return " " + "." * TRIM_SIZE + target;
+    }
+
+    private static String getBar() {
+        return "-" * maxFileColumnLength +
+                "|" +
+                "-" *
+                maxInstructionColumnLength +
+                "|" +
+                "-" *
+                maxBranchColumnLength +
+                "|" +
+                "\n";
+    }
+
+    private static String getTitle() {
+        return FILE + "|" + INSTRUCTION + "|" + BRANCH + "|" + "\n";
+    }
+
+    private static String getLine(Coverage coverage,
+                                  AndroidCoverageCheckExtension extension, String fileName) {
+        float instructionRate = 0F;
+        float branchRate = 0F;
+
+        coverage.getCounterList().each {
+            if (it.getType() == CoverageAll.INSTRUCTION) {
+                instructionRate = it.getRate();
+            } else if (it.getType() == CoverageAll.BRANCH) {
+                branchRate = it.getRate();
+            }
+        }
+
+        Color instructionColor = getColorType(instructionRate,
+                extension.instruction);
+        Color branchColor = getColorType(branchRate, extension.branch);
+        Color fileColor;
+        if (instructionColor == Color.RED || branchColor == Color.RED) {
+            fileColor = Color.RED;
+        } else if (instructionColor == Color.YELLOW || branchColor == Color.YELLOW) {
+            fileColor = Color.YELLOW;
+        } else {
+            fileColor = Color.GREEN;
+        }
+
+        NumberFormat format = NumberFormat.getInstance();
+        format.setMaximumFractionDigits(2);
+
+        String file = setColor(padBeforeSpace(
+                trimFileName(fileName,
+                        maxFileColumnLength), maxFileColumnLength), fileColor);
+        String instruction = setColor(
+                padBeforeSpace(format.format(instructionRate),
+                        maxInstructionColumnLength), instructionColor);
+        String branch = setColor(
+                padBeforeSpace(format.format(branchRate), maxBranchColumnLength),
+                branchColor);
+        return file + "|" + instruction + "|" + branch + "|" + "\n";
+
+    }
+
+    private static Color getColorType(float rate, int threshold) {
+        if (threshold < 0) return Color.GREEN;
+        if (Float.compare(rate, threshold) >= 0) return Color.GREEN;
+        if (Float.compare((float) (rate / threshold), 0.5F) > 0) return Color.YELLOW;
+        return Color.RED;
+    }
+
+    private static String setColor(String message, Color color) {
+        if (color == Color.RED) {
+            return ColorLogMessage.boldRed(message);
+        } else if (color == Color.YELLOW) {
+            return ColorLogMessage.boldYellow(message);
+        }
+        return ColorLogMessage.boldGreen(message);
+    }
+}
