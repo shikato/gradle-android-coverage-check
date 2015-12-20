@@ -13,10 +13,10 @@ class AndroidCoverageCheckExtension {
         excludesMap.put(PATH, []);
     }
 
-    private Map<String, String> xmlReportsMap = new HashMap<>();
+    private Map<String, String> reportXmlMap = new HashMap<>();
     {
-        xmlReportsMap.put(ENTRY_DIR, "build");
-        xmlReportsMap.put(PATH, ["**/coverage/**/report.xml"]);
+        reportXmlMap.put(ENTRY_DIR, "build");
+        reportXmlMap.put(PATH, ["**/coverage/**/report.xml"]);
     }
 
 
@@ -36,13 +36,13 @@ class AndroidCoverageCheckExtension {
     }
 
     // カバレッジレポート(report.xml)の場所
-    void xmlReports(String[] path) {
-        xmlReportsMap.put(PATH, path);
+    void reportXml(String[] path) {
+        reportXmlMap.put(PATH, path);
     }
     // カバレッジレポート(report.xml)の場所
-    void xmlReports(String entryDir, String[] path) {
-        xmlReportsMap.put(ENTRY_DIR, entryDir);
-        xmlReportsMap.put(PATH, path);
+    void reportXml(String entryDir, String[] path) {
+        reportXmlMap.put(ENTRY_DIR, entryDir);
+        reportXmlMap.put(PATH, path);
     }
 
     // 閾値を満たさなかった時にビルド失敗とするかどうか
@@ -56,11 +56,11 @@ class AndroidCoverageCheckExtension {
         return excludesMap.get(PATH);
     }
 
-    String getXmlReportsEntryDir() {
-        return xmlReportsMap.get(ENTRY_DIR);
+    String getReportXmlEntryDir() {
+        return reportXmlMap.get(ENTRY_DIR);
     }
 
-    String[] getXmlReportsPath() {
-        return xmlReportsMap.get(PATH);
+    String[] getReportXmlPath() {
+        return reportXmlMap.get(PATH);
     }
 }
