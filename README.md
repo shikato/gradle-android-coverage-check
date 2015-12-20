@@ -1,8 +1,8 @@
 # gradle-android-coverage-check
 
-Gradle-android-coverage-check is a gradle plugin to check a coverage reports.
+Gradle-android-coverage-check is a gradle plugin to check a coverage reports.  
+
 ![demo1]()
- 
  
 ## Install
 build.gradle
@@ -27,6 +27,7 @@ report.xml should have already existed.
 ./gradlew androidCoverageCheck  
 ```
 
+### Options
 
 ## License
 MIT
