@@ -43,6 +43,7 @@ report.xml should have already existed.
 ```
 
 ### Options
+**build.gradle**
 
 ```groovy
 // Excluded targets
