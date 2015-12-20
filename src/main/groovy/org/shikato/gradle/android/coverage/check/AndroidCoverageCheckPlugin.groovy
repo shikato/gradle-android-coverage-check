@@ -28,15 +28,15 @@ class AndroidCoverageCheckPlugin implements Plugin<Project> {
         AndroidCoverageCheckExtension extension = project.androidCoverageCheck;
 
         // getting report.xml
-        List<File> xmlReports = ReportXmlGetter.get(project,
-                extension.getXmlReportsEntryDir(), extension.getXmlReportsPath());
+        List<File> reportXmlList = ReportXmlGetter.get(project,
+                extension.getReportXmlEntryDir(), extension.getReportXmlPath());
 
-        if (xmlReports == null || xmlReports.size() == 0) {
-            project.logger.warn("Failed getting report.xml")
+        if (reportXmlList == null || reportXmlList.size() == 0) {
+            project.logger.warn("Failed getting coverage reports.")
             return;
         }
 
-        xmlReports.each {
+        reportXmlList.each {
 
             // parsing report.xml
             CoverageAll coverage = ReportXmlParser.parse(project, it.text);
