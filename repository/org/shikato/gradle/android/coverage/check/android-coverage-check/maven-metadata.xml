@@ -3,7 +3,7 @@
   <groupId>org.shikato.gradle.android.coverage.check</groupId>
   <artifactId>android-coverage-check</artifactId>
   <versioning>
-    <release>0.0.6</release>
+    <release>0.0.7</release>
     <versions>
       <version>0.0.1</version>
       <version>0.0.1.0</version>
@@ -12,7 +12,8 @@
       <version>0.0.4</version>
       <version>0.0.5</version>
       <version>0.0.6</version>
+      <version>0.0.7</version>
     </versions>
-    <lastUpdated>20151220123547</lastUpdated>
+    <lastUpdated>20151220124312</lastUpdated>
   </versioning>
 </metadata>

@@ -23,22 +23,26 @@ class AndroidCoverageCheckExtension {
     // C1 minimum threshold
     int branch = 0;
 
+    void shikato() {
+
+    }
+
     // チェック対象外ファイル
-    public excludes(String[] path) {
+    void excludes(String[] path) {
         excludesMap.put(PATH, path);
     }
     // チェック対象外ファイル
-    public excludes(String entryDir, String[] path) {
+    void excludes(String entryDir, String[] path) {
         excludesMap.put(ENTRY_DIR, entryDir);
         excludesMap.put(PATH, path);
     }
 
     // カバレッジレポート(report.xml)の場所
-    public xmlReports(String[] path) {
+    void xmlReports(String[] path) {
         xmlReportsMap.put(PATH, path);
     }
     // カバレッジレポート(report.xml)の場所
-    public xmlReports(String entryDir, String[] path) {
+    void xmlReports(String entryDir, String[] path) {
         xmlReportsMap.put(ENTRY_DIR, entryDir);
         xmlReportsMap.put(PATH, path);
     }
