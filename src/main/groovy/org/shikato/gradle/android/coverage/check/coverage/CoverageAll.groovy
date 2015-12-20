@@ -22,7 +22,7 @@ class CoverageAll implements Coverage {
     }
 
     @Override
-    def setCounterList(List<CoverageCounter> counterList) {
+    void setCounterList(List<CoverageCounter> counterList) {
         this.counterList = counterList;
     }
 }

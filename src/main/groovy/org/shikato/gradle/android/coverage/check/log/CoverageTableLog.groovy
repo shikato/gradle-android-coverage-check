@@ -34,7 +34,7 @@ class CoverageTableLog {
     private static int maxInstructionColumnLength = DefaultValue.INT;
     private static int maxBranchColumnLength = DefaultValue.INT;
 
-    public static def show(Project project, CoverageAll coverage,
+    public static void show(Project project, CoverageAll coverage,
                            AndroidCoverageCheckExtension extension) {
         setMaxLength();
 
@@ -55,7 +55,7 @@ class CoverageTableLog {
         project.logger.lifecycle(message);
     }
 
-    private static def setMaxLength() {
+    private static void setMaxLength() {
         maxFileColumnLength = FILE.length();
         maxInstructionColumnLength = BRANCH.length();
         maxBranchColumnLength = BRANCH.length();

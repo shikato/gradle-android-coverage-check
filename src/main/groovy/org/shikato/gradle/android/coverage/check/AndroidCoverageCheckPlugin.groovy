@@ -24,7 +24,7 @@ class AndroidCoverageCheckPlugin implements Plugin<Project> {
         }
     }
 
-    private def androidCoverageCheck(Project project) {
+    private void androidCoverageCheck(Project project) {
         AndroidCoverageCheckExtension extension = project.androidCoverageCheck;
 
         // getting report.xml

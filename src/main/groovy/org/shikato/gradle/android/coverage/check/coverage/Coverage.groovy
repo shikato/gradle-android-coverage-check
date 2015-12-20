@@ -5,5 +5,5 @@ interface Coverage {
     public static final String BRANCH = "BRANCH";
 
     List<CoverageCounter> getCounterList();
-    def setCounterList(List<CoverageCounter> counterList);
+    void setCounterList(List<CoverageCounter> counterList);
 }
