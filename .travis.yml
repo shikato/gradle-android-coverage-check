@@ -1,0 +1,13 @@
+sudo: false
+language: java
+jdk: oraclejdk7
+
+install:
+- ./gradlew install
+
+script:
+- ./gradlew check
+- ./gradlew -p acceptance-test test
+
+after_success:
+- test ${TRAVIS_TAG} && ./gradlew bintrayUpload
