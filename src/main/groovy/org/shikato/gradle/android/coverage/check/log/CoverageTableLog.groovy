@@ -131,7 +131,7 @@ class CoverageTableLog {
 
         String instruction;
         if (Float.compare(instructionRate, ErrorValue.FLOAT) == 0) {
-            instruction =  setColor(padBeforeSpace(IGNORE_RATE, maxInstructionColumnLength), instructionColor);
+            instruction = setColor(padBeforeSpace(IGNORE_RATE, maxInstructionColumnLength), instructionColor);
         } else {
             instruction = setColor(padBeforeSpace(format.format(instructionRate), maxInstructionColumnLength), instructionColor);
         }

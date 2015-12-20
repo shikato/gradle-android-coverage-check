@@ -34,7 +34,7 @@ uploadArchives {
 
 buildscript{
     dependencies {
-        classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.8'
+        classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.1'
     }
     repositories {
         maven { url uri('./repository') }

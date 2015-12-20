@@ -21,9 +21,9 @@ class AndroidCoverageCheckExtension {
 
 
     // C0 minimum threshold
-    int instruction = 0;
+    int instruction = 20;
     // C1 minimum threshold
-    int branch = 0;
+    int branch = 20;
 
     // チェック対象外ファイル
     void excludes(String[] path) {
