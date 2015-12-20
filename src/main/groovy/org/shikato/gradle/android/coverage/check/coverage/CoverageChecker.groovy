@@ -8,23 +8,22 @@ import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 
 class CoverageChecker {
 
-    public static def check(Project project, CoverageAll coverage,
+    public static Coverage check(Project project, CoverageAll coverageAll,
                             AndroidCoverageCheckExtension extension) {
         List<String> excludes = getExcludes(project, extension.getExcludesEntryDir(),
                 extension.getExcludesPath());
 
-        coverage.getSourcefileList().each {
+        coverageAll.getSourcefileList().each {
             it.setIsExclude(isExclude(excludes,
                     it.getPackageName() + "/" + it.getFileName()));
-            checkCoverageCounter(it, coverage, extension);
+            checkCoverageCounter(it, coverageAll, extension);
         };
 
-        checkCoverageCounter(coverage, coverage, extension);
+        return  checkCoverageCounter(coverageAll, coverageAll, extension);
     }
 
     // TODO: 整理（ALlとsourcefileでoverloadするか、このまま合わせて処理するか）
-    private static
-    def checkCoverageCounter(Coverage coverage, CoverageAll coverageAll, AndroidCoverageCheckExtension extension) {
+    private static Coverage checkCoverageCounter(Coverage coverage, CoverageAll coverageAll, AndroidCoverageCheckExtension extension) {
         boolean isHavingInstruction = false;
         boolean isHavingBranch = false;
 
@@ -51,7 +50,7 @@ class CoverageChecker {
             }
         }
 
-        setDefaultCounter(coverage, isHavingInstruction, isHavingBranch);
+        return coverage;
     }
 
     private static boolean isSatisfiedMinimumThreshold(CoverageCounter counter,
@@ -96,23 +95,5 @@ class CoverageChecker {
         }
 
         return excludes;
-    }
-
-    private
-    static Coverage setDefaultCounter(Coverage coverage, boolean isHavingInstruction, boolean isHavingBranch) {
-        List<CoverageCounter> counterList = coverage.getCounterList();
-        if (!isHavingInstruction) {
-            counterList.add(getInitCounter(Coverage.INSTRUCTION))
-        } else if (!isHavingBranch) {
-            counterList.add(getInitCounter(Coverage.BRANCH))
-        }
-        coverage.setCounterList(counterList);
-        return coverage;
-    }
-
-    private static CoverageCounter getInitCounter(String type) {
-        CoverageCounter counter = new CoverageCounter();
-        counter.setType(type);
-        return counter;
     }
 }

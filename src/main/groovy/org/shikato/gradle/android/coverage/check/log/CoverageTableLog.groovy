@@ -5,6 +5,7 @@ import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 import org.shikato.gradle.android.coverage.check.coverage.Coverage
 import org.shikato.gradle.android.coverage.check.coverage.CoverageAll
 import org.shikato.gradle.android.coverage.check.util.DefaultValue
+import org.shikato.gradle.android.coverage.check.util.ErrorValue
 
 import java.text.NumberFormat
 
@@ -16,8 +17,10 @@ class CoverageTableLog {
     private static final String METHOD      = " % METHOD ";
     private static final String COMPLEXITY  = "  % COMPL ";
 
-    private static final String FILE        = "FILE                           ";
-    private static final String ALL_FILES   = "All files                      ";
+    private static final String FILE        = "FILE                              ";
+    private static final String ALL_FILES   = "All files                         ";
+
+    private static final String IGNORE_RATE = "n/a";
 
     public static enum Color {
         GREEN,
@@ -96,8 +99,9 @@ class CoverageTableLog {
 
     private static String getLine(Coverage coverage,
                                   AndroidCoverageCheckExtension extension, String fileName) {
-        float instructionRate = 0F;
-        float branchRate = 0F;
+
+        float instructionRate = ErrorValue.FLOAT;
+        float branchRate = ErrorValue.FLOAT;
 
         coverage.getCounterList().each {
             if (it.getType() == CoverageAll.INSTRUCTION) {
@@ -107,8 +111,7 @@ class CoverageTableLog {
             }
         }
 
-        Color instructionColor = getColorType(instructionRate,
-                extension.instruction);
+        Color instructionColor = getColorType(instructionRate, extension.instruction);
         Color branchColor = getColorType(branchRate, extension.branch);
         Color fileColor;
         if (instructionColor == Color.RED || branchColor == Color.RED) {
@@ -125,18 +128,27 @@ class CoverageTableLog {
         String file = setColor(padBeforeSpace(
                 trimFileName(fileName,
                         maxFileColumnLength), maxFileColumnLength), fileColor);
-        String instruction = setColor(
-                padBeforeSpace(format.format(instructionRate),
-                        maxInstructionColumnLength), instructionColor);
-        String branch = setColor(
-                padBeforeSpace(format.format(branchRate), maxBranchColumnLength),
-                branchColor);
+
+        String instruction;
+        if (Float.compare(instructionRate, ErrorValue.FLOAT) == 0) {
+            instruction =  setColor(padBeforeSpace(IGNORE_RATE, maxInstructionColumnLength), instructionColor);
+        } else {
+            instruction = setColor(padBeforeSpace(format.format(instructionRate), maxInstructionColumnLength), instructionColor);
+        }
+
+        String branch;
+        if (Float.compare(branchRate, ErrorValue.FLOAT) == 0) {
+            branch = setColor(padBeforeSpace(IGNORE_RATE, maxBranchColumnLength), branchColor);
+        } else {
+            branch = setColor(padBeforeSpace(format.format(branchRate), maxBranchColumnLength), branchColor);
+        }
+
         return file + "|" + instruction + "|" + branch + "|" + "\n";
 
     }
 
     private static Color getColorType(float rate, int threshold) {
-        if (threshold < 0 || Float.compare(rate, threshold) >= 0) return Color.GREEN;
+        if (Float.compare(rate, ErrorValue.FLOAT) == 0 || threshold < 0 || Float.compare(rate, threshold) >= 0) return Color.GREEN;
         if (Float.compare((float) (rate / threshold), 0.5F) > 0) return Color.YELLOW;
         return Color.RED;
     }

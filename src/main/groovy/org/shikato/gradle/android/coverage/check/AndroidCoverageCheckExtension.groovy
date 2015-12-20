@@ -14,7 +14,6 @@ class AndroidCoverageCheckExtension {
     private Map<String, String> xmlReportsMap = new HashMap<>();
     {
         xmlReportsMap.put(ENTRY_DIR, "build");
-//        xmlReportsMap.put(PATH, ["outputs/reports/coverage/**/report.xml"]);
         xmlReportsMap.put(PATH, ["**/coverage/**/report.xml"]);
     }
 
