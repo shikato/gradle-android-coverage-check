@@ -1,7 +1,6 @@
 # gradle-android-coverage-check
 
-Gradle-android-coverage-check is a gradle plugin to 
-
+Gradle-android-coverage-check is a gradle plugin to check a coverage reports.
 ![demo1]()
  
  
