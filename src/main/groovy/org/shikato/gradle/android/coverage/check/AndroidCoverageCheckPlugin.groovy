@@ -9,44 +9,59 @@ import org.shikato.gradle.android.coverage.check.log.CoverageTableLog
 import org.shikato.gradle.android.coverage.check.xml.ReportXmlGetter
 import org.shikato.gradle.android.coverage.check.xml.ReportXmlParser
 
-// TODO: description
 class AndroidCoverageCheckPlugin implements Plugin<Project> {
+
+    private static final String TASK_NAME_TYPE1 = "androidCoverageCheck";
+    private static final String TASK_NAME_TYPE2 = "androidCoverageCheckNoDpTask";
+
+    private static final String DESCRIPTION_TYPE1 = "Checks coverage reports.";
+    private static final String DESCRIPTION_TYPE2 = "Checks coverage reports without createDebugCoverageReport task.";
+
+    private static final String EXTENSIONS_NAME = "androidCoverageCheck";
+
+    private static final String DEPENDENCE_TASK = "createDebugCoverageReport";
 
     @Override
     void apply(Project project) {
+        project.extensions.create(EXTENSIONS_NAME, AndroidCoverageCheckExtension);
 
-        project.extensions.create("androidCoverageCheck", AndroidCoverageCheckExtension);
+        project.task(TASK_NAME_TYPE1, dependsOn: DEPENDENCE_TASK, description: DESCRIPTION_TYPE1) << {
+            androidCoverageCheck(project);
+        }
 
-//        project.task("androidCoverageCheck", dependsOn: "createDebugCoverageReport") << {
-        project.task("androidCoverageCheck") << {
-            AndroidCoverageCheckExtension extension = project.androidCoverageCheck;
+        project.task(TASK_NAME_TYPE2, description: DESCRIPTION_TYPE2) << {
+            androidCoverageCheck(project);
+        }
+    }
 
-            // getting report.xml
-            List<File> xmlReports = ReportXmlGetter.get(project,
-                    extension.getXmlReportsEntryDir(), extension.getXmlReportsPath());
+    private def androidCoverageCheck(Project project) {
+        AndroidCoverageCheckExtension extension = project.androidCoverageCheck;
 
-            if (xmlReports == null || xmlReports.size() == 0) {
-                project.logger.warn("Failed getting report.xml")
-                return;
-            }
+        // getting report.xml
+        List<File> xmlReports = ReportXmlGetter.get(project,
+                extension.getXmlReportsEntryDir(), extension.getXmlReportsPath());
 
-            xmlReports.each {
+        if (xmlReports == null || xmlReports.size() == 0) {
+            project.logger.warn("Failed getting report.xml")
+            return;
+        }
 
-                // parsing report.xml
-                CoverageAll coverage = ReportXmlParser.parse(project, it.text);
-                coverage.setReportPath(it.path);
-                if (coverage == null || coverage.getSourcefileList().size() == 0) return;
+        xmlReports.each {
 
-                // checking coverage
-                coverage = CoverageChecker.check(project, coverage, extension);
+            // parsing report.xml
+            CoverageAll coverage = ReportXmlParser.parse(project, it.text);
+            coverage.setReportPath(it.path);
+            if (coverage == null || coverage.getSourcefileList().size() == 0) return;
 
-                // output log
-                CoverageTableLog.show(project, coverage, extension);
+            // checking coverage
+            coverage = CoverageChecker.check(project, coverage, extension);
 
-                // isHavingUnsatisfiedCoverage && isBuidFailure → failure build
-                if (coverage.getIsHavingUnsatisfiedCoverage() && extension.isBuildFailure) {
-                    throw new GradleException("Coverage did not satisfy the minimum threshold.");
-                }
+            // output log
+            CoverageTableLog.show(project, coverage, extension);
+
+            // isHavingUnsatisfiedCoverage && isBuidFailure → failure build
+            if (coverage.getIsHavingUnsatisfiedCoverage() && extension.isBuildFailure) {
+                throw new GradleException("Coverage did not satisfy the minimum threshold.");
             }
         }
     }
