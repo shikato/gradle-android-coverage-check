@@ -11,25 +11,17 @@ import org.shikato.gradle.android.coverage.check.xml.ReportXmlParser
 
 class AndroidCoverageCheckPlugin implements Plugin<Project> {
 
-    private static final String TASK_NAME_TYPE1 = "androidCoverageCheck";
-    private static final String TASK_NAME_TYPE2 = "androidCoverageCheckNoDpTask";
+    private static final String TASK_NAME_TYPE = "androidCoverageCheck";
 
-    private static final String DESCRIPTION_TYPE1 = "Checks coverage reports.";
-    private static final String DESCRIPTION_TYPE2 = "Checks coverage reports without createDebugCoverageReport task.";
+    private static final String DESCRIPTION_TYPE = "Checks coverage reports.";
 
     private static final String EXTENSIONS_NAME = "androidCoverageCheck";
-
-    private static final String DEPENDENCE_TASK = "createDebugCoverageReport";
 
     @Override
     void apply(Project project) {
         project.extensions.create(EXTENSIONS_NAME, AndroidCoverageCheckExtension);
 
-        project.task(TASK_NAME_TYPE1, dependsOn: DEPENDENCE_TASK, description: DESCRIPTION_TYPE1) << {
-            androidCoverageCheck(project);
-        }
-
-        project.task(TASK_NAME_TYPE2, description: DESCRIPTION_TYPE2) << {
+        project.task(TASK_NAME_TYPE, description: DESCRIPTION_TYPE) << {
             androidCoverageCheck(project);
         }
     }
