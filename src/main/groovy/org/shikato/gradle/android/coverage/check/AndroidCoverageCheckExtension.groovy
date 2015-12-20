@@ -1,5 +1,7 @@
 package org.shikato.gradle.android.coverage.check
 
+// TOOD: もう少しgroovyっぽく書く必要がありそう
+// String[] targets = []; みたいにexcludesを指定しないといけなくなってしまっている、、、
 class AndroidCoverageCheckExtension {
 
     private static final String ENTRY_DIR = "entryPointDir";
@@ -22,10 +24,6 @@ class AndroidCoverageCheckExtension {
     int instruction = 0;
     // C1 minimum threshold
     int branch = 0;
-
-    void shikato() {
-
-    }
 
     // チェック対象外ファイル
     void excludes(String[] path) {

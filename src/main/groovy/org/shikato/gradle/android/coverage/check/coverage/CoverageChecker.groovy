@@ -9,21 +9,24 @@ import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 class CoverageChecker {
 
     public static Coverage check(Project project, CoverageAll coverageAll,
-                            AndroidCoverageCheckExtension extension) {
+                                 AndroidCoverageCheckExtension extension) {
         List<String> excludes = getExcludes(project, extension.getExcludesEntryDir(),
                 extension.getExcludesPath());
 
         coverageAll.getSourcefileList().each {
             it.setIsExclude(isExclude(excludes,
                     it.getPackageName() + "/" + it.getFileName()));
-            checkCoverageCounter(it, coverageAll, extension);
+            checkCoverageCounter(it, coverageAll, extension, true);
         };
 
-        return  checkCoverageCounter(coverageAll, coverageAll, extension);
+        return checkCoverageCounter(coverageAll, coverageAll, extension, false);
     }
 
     // TODO: 整理（ALlとsourcefileでoverloadするか、このまま合わせて処理するか）
-    private static Coverage checkCoverageCounter(Coverage coverage, CoverageAll coverageAll, AndroidCoverageCheckExtension extension) {
+    private static Coverage checkCoverageCounter(Coverage coverage,
+                                                 CoverageAll coverageAll,
+                                                 AndroidCoverageCheckExtension extension,
+                                                 boolean isSetIsHavingUnsatisfiedCoverage) {
         boolean isHavingInstruction = false;
         boolean isHavingBranch = false;
 
@@ -36,7 +39,9 @@ class CoverageChecker {
             }
 
             if (!isSatisfiedMinimumThreshold(it, extension.getInstruction())) {
-                coverageAll.setIsHavingUnsatisfiedCoverage(true);
+                if (isSetIsHavingUnsatisfiedCoverage) {
+                    coverageAll.setIsHavingUnsatisfiedCoverage(true);
+                }
                 it.setIsSatisfied(false)
             } else {
                 it.setIsSatisfied(true)
@@ -69,12 +74,7 @@ class CoverageChecker {
 
     private static boolean isExclude(List<String> excludes, String path) {
         for (String exclude : excludes) {
-            println "--s--"
-            println exclude
-            println path
-            println "--e--"
-
-            if (exclude.lastIndexOf(path)) return true;
+            if (exclude.lastIndexOf(path) != -1) return true;
         }
         return false;
     }
@@ -91,9 +91,6 @@ class CoverageChecker {
 
                 @Override
                 void visitFile(FileVisitDetails fileDetails) {
-                    printn fileDetails.name
-                    printn fileDetails.path
-
                     File file = project.file(fileDetails.getFile());
                     if (!file.exists()) return;
                     if (excludes.contains(file.getPath())) return;
