@@ -71,7 +71,7 @@ androidCoverageCheck {
     branch 50
 
     // set excluded targets
-    excludes excludeFiles;
+    excludes excludeFiles
     // set coverage report path
     reportXml reportXmlPath
 }
