@@ -79,5 +79,8 @@ androidCoverageCheck {
 
 ```
 
+## Documents
+[Qiita](http://qiita.com/shikato/items/9869719ab5e22ee9d061)
+
 ## License
 MIT
