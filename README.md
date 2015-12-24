@@ -55,7 +55,7 @@ String[] excludeFiles = ["**/*Activity.java",
 
 // coverage reports path
 // If reports are plural, The task checks each.
-// Default: **/coverage/**/report.xml
+// Default: ["**/coverage/**/report.xml"]
 String[] reportXmlPath = ["hoge/fuga/**/report.xml"];
 
 androidCoverageCheck {
