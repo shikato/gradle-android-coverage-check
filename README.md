@@ -1,25 +1,26 @@
 # gradle-android-coverage-check
 
-AndroidCoverageCheck is a gradle plugin to check a coverage reports.  
+AndroidCoverageCheck is a gradle plugin to check coverage reports.  
 
 ![demo1](https://qiita-image-store.s3.amazonaws.com/0/47437/27441815-8d99-66cd-c214-02ff383c1ce8.png)
  
 ## Install
 **build.gradle**  
 
-Please, add a dependency.
+Add a dependency.
 ```groovy
-repositories {
-    maven {
-        url 'https://github.com/shikato/gradle-android-coverage-check/raw/master/repository'
+buildscript {
+    repositories {
+        maven {
+            url 'https://github.com/shikato/gradle-android-coverage-check/raw/master/repository'
+        }
+    }
+    dependencies {
+        classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.2'
     }
 }
-
-dependencies {
-    classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.2'
-}
 ```
-Please, apply this plugin.
+Apply this plugin.
 ```groovy
 apply plugin: 'android-coverage-check'
 ```
@@ -30,7 +31,7 @@ apply plugin: 'android-coverage-check'
 * androidCovrageCheck - Checks coverage reports.  
 
 #### Examples
-**Create a coverage reports & check**
+**Create coverage reports & check**
 ```
 ./gradlew createDebugCoverageReport androidCoverageCheck  
 ```
@@ -54,7 +55,7 @@ String[] excludeFiles = ["**/*Activity.java",
 
 // coverage reports path
 // If reports are plural, The task checks each.
-// Default: **/coverage/**/report.xml
+// Default: ["**/coverage/**/report.xml"]
 String[] reportXmlPath = ["hoge/fuga/**/report.xml"];
 
 androidCoverageCheck {
@@ -71,12 +72,15 @@ androidCoverageCheck {
     branch 50
 
     // set excluded targets
-    excludes excludeFiles;
+    excludes excludeFiles
     // set coverage report path
     reportXml reportXmlPath
 }
 
 ```
+
+## Documents
+[Qiita](http://qiita.com/shikato/items/9869719ab5e22ee9d061)
 
 ## License
 MIT
