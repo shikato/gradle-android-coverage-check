@@ -3,10 +3,9 @@ apply plugin: 'maven'
 apply plugin: 'jacoco'
 apply plugin: 'android-coverage-check'
 
-
 String version = '0.0.2';
 String groupId = 'org.shikato.gradle.android.coverage.check';
-String artifatId = 'android-coverage-check';
+String artifactId = 'android-coverage-check';
 
 dependencies {
     compile gradleApi()
@@ -25,7 +24,7 @@ uploadArchives {
             repository url: "file://${repo.absolutePath}"
             pom.version = version
             pom.groupId = groupId
-            pom.artifactId = artifatId
+            pom.artifactId = artifactId
         }
     }
 }
@@ -49,15 +48,13 @@ jacocoTestReport {
     }
 }
 
-String[] excludeFiles = [];
 String[] reportXmlPath = ["**/jacoco/**/jacocoTestReport.xml"];
 
 androidCoverageCheck {
     isBuildFailure false
     instruction 80
     branch 80
-//    excludes excludeFiles
     reportXml reportXmlPath
 }
 
-apply plugin: artifatId
+apply plugin: artifactId
