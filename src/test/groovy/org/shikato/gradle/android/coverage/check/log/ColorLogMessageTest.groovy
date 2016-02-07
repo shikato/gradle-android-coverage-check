@@ -26,4 +26,9 @@ class ColorLogMessageTest {
         assert ColorLogMessage.boldYellow(target) == YELLOW_BOLD_CHAR + target + RELEASE;
         assert ColorLogMessage.boldWhite(target) == WHITE_BOLD_CHAR + target + RELEASE;
     }
+
+    @Test
+    void constructor() {
+        new ColorLogMessage();
+    }
 }
