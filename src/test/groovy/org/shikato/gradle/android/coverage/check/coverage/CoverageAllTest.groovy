@@ -13,16 +13,16 @@ class CoverageAllTest {
     }
 
     @Test
-    void coverageCounter() {
+    void getterAndSetter() {
         List<CoverageCounter> counterList = new ArrayList<>();
         mCoverageAll.setCounterList(counterList);
-        assert mCoverageAll.getCounterList() == counterList;
-    }
-
-    @Test
-    void sourceFileList() {
         List<CoverageSourcefile> sourceFileList = new ArrayList<>();
         mCoverageAll.setSourcefileList(sourceFileList);
+        String reportPathExpected = "hoge/report.xml";
+        mCoverageAll.setReportPath(reportPathExpected);
+
         assert mCoverageAll.getSourcefileList() == sourceFileList;
+        assert mCoverageAll.getCounterList() == counterList;
+        assert mCoverageAll.getReportPath() == reportPathExpected;
     }
 }
