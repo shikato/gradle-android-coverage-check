@@ -18,6 +18,7 @@ class ColorLogMessageTest {
         assert ColorLogMessage.boldYellow(null) == ErrorValue.STRING;
         assert ColorLogMessage.boldWhite(null) == ErrorValue.STRING;
     }
+
     @Test
     void ifArgIsStringVal_RetIsColorChar() {
         String target = "shikato";
