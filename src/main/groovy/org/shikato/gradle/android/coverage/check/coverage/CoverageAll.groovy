@@ -18,7 +18,7 @@ class CoverageAll implements Coverage {
 
     @Override
     List<CoverageCounter> getCounterList() {
-        return counterList;
+        return this.counterList;
     }
 
     @Override
