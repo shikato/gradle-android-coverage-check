@@ -4,7 +4,7 @@ import org.junit.Test
 
 class ErrorValueTest {
     @Test
-    void params() {
+    void values() {
         assert ErrorValue.STRING == null;
         assert ErrorValue.INT == -1;
         assert ErrorValue.FLOAT == -1F;
