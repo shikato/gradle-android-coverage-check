@@ -22,7 +22,7 @@ class CoverageCounterTest {
         mCounter.setCovered(coverdExpected);
         int missedExpected = 2;
         mCounter.setMissed(missedExpected);
-        int rateExpected = 3F;
+        float rateExpected = 3F;
         mCounter.setRate(rateExpected);
 
         assert mCounter.getIsSatisfied() == satisfiedExpected;

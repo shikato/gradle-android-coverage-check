@@ -14,8 +14,8 @@ class CoverageSourcefileTest {
 
     @Test
     void getterAndSetter() {
-        List<CoverageCounter> counterList = new ArrayList<>();
-        mCoverageSourcefile.setCounterList(counterList);
+        List<CoverageCounter> counterListExpected = new ArrayList<>();
+        mCoverageSourcefile.setCounterList(counterListExpected);
         boolean isExcludeExpected = false;
         mCoverageSourcefile.setIsExclude(isExcludeExpected);
         String fileNameExpected = "shikatoFileName";
@@ -23,7 +23,7 @@ class CoverageSourcefileTest {
         String packageNameExpected = "shikatoPackageName";
         mCoverageSourcefile.setPackageName(packageNameExpected)
 
-        assert mCoverageSourcefile.getCounterList() == counterList;
+        assert mCoverageSourcefile.getCounterList() == counterListExpected;
         assert mCoverageSourcefile.getIsExclude() == isExcludeExpected;
         assert mCoverageSourcefile.getFileName() == fileNameExpected;
         assert mCoverageSourcefile.getPackageName() == packageNameExpected;
