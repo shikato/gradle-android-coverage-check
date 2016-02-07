@@ -14,17 +14,15 @@ class CoverageAllTest {
 
     @Test
     void coverageCounter() {
-        CoverageAll coverageAll = new CoverageAll();
         List<CoverageCounter> counterList = new ArrayList<>();
-        coverageAll.setCounterList(counterList);
-        assert coverageAll.getCounterList() == counterList;
+        mCoverageAll.setCounterList(counterList);
+        assert mCoverageAll.getCounterList() == counterList;
     }
 
     @Test
     void sourceFileList() {
-        CoverageAll coverageAll = new CoverageAll();
         List<CoverageSourcefile> sourceFileList = new ArrayList<>();
-        coverageAll.setSourcefileList(sourceFileList);
-        assert coverageAll.getSourcefileList() == sourceFileList;
+        mCoverageAll.setSourcefileList(sourceFileList);
+        assert mCoverageAll.getSourcefileList() == sourceFileList;
     }
 }
