@@ -31,7 +31,8 @@ apply plugin: 'android-coverage-check'
 * androidCovrageCheck - Checks coverage reports.  
 
 #### Examples
-**Create coverage reports & check**
+**Create coverage reports & check**   
+Only at the time of "org.gradle.parallel=false".
 ```
 ./gradlew createDebugCoverageReport androidCoverageCheck  
 ```
