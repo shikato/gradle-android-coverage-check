@@ -1,44 +1,83 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
+apply plugin: 'jacoco'
+//apply plugin: 'android-coverage-check' // ver 0.0.2
+apply plugin: "org.shikato.gradle.android.coverage.check"
+apply plugin: 'com.gradle.plugin-publish'
 
-String version = '0.0.2';
-String groupId = 'org.shikato.gradle.android.coverage.check';
-String artifatId = 'android-coverage-check';
+def web = 'https://github.com/shikato/gradle-android-coverage-check';
+def artifactId = 'android-coverage-check';
+def desc = 'Check jacoco coverage xml reports.';
+def name = 'Android Coverage Check Plugin';
+def localRepository = new File(rootDir, './repository')
+
+version = '0.0.5';
+group = 'org.shikato.gradle.android.coverage.check';
+
+buildscript{
+    dependencies {
+//        classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.2' // ver 0.0.2
+        classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.5"
+        classpath "com.gradle.publish:plugin-publish-plugin:0.9.3"
+    }
+    repositories {
+        jcenter()
+        mavenCentral()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+//        maven {
+//            url uri('./repository') // ver 0.0.2
+//        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
 
 dependencies {
     compile gradleApi()
     compile localGroovy()
-    testCompile('org.spockframework:spock-core:1.0-groovy-2.4') {
-        exclude module: 'groovy-all'
-    }
-    testCompile 'cglib:cglib-nodep:3.1'
 }
 
-task javadocJar(type: Jar, dependsOn: groovydoc) {
-    from "${buildDir}/docs/groovydoc"
-    classifier = 'javadoc'
-}
-
-def repo = new File(rootDir, './repository')
 uploadArchives {
     repositories {
         mavenDeployer {
-            repository url: "file://${repo.absolutePath}"
+            repository url: "file://${localRepository.absolutePath}"
             pom.version = version
-            pom.groupId = groupId
-            pom.artifactId = artifatId
+            pom.groupId = group
+            pom.artifactId = artifactId
         }
     }
 }
 
-
-buildscript{
-    dependencies {
-        classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.1'
-    }
-    repositories {
-        maven { url uri('./repository') }
+jacocoTestReport {
+    reports {
+        xml.enabled = true
     }
 }
 
-apply plugin: artifatId
+String[] reportXmlPath = ["**/jacoco/**/jacocoTestReport.xml"];
+
+androidCoverageCheck {
+    isBuildFailure false
+    instruction 80
+    branch 80
+    reportXml reportXmlPath
+}
+
+pluginBundle {
+    website = web
+    vcsUrl = web
+    description = desc
+    tags = ['android', 'coverage', 'jacoco', 'test', 'java']
+
+    plugins {
+        androidCoverageCheckPlugin {
+            id = group
+            displayName = name
+        }
+    }
+}
+

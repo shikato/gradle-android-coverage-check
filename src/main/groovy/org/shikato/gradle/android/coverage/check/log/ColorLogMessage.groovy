@@ -1,5 +1,7 @@
 package org.shikato.gradle.android.coverage.check.log
 
+import org.shikato.gradle.android.coverage.check.util.ErrorValue
+
 class ColorLogMessage {
 
     private static final String RELEASE = "\u001b[m";
@@ -9,22 +11,22 @@ class ColorLogMessage {
     private static final String WHITE_BOLD_CHAR = "\u001b[1m";
 
     public static String boldWhite(String message) {
-        if (message == null) return;
+        if (message == null) return ErrorValue.STRING;
         return WHITE_BOLD_CHAR + message + RELEASE;
     }
 
     public static String boldRed(String message) {
-        if (message == null) return;
+        if (message == null) return ErrorValue.STRING;
         return RED_BOLD_CHAR + message + RELEASE;
     }
 
     public static String boldGreen(String message) {
-        if (message == null) return;
+        if (message == null) return ErrorValue.STRING;
         return GREEN_BOLD_CHAR + message + RELEASE;
     }
 
     public static String boldYellow(String message) {
-        if (message == null) return;
+        if (message == null) return ErrorValue.STRING;
         return YELLOW_BOLD_CHAR + message + RELEASE;
     }
 }

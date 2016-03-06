@@ -12,7 +12,7 @@ import org.shikato.gradle.android.coverage.check.xml.ReportXmlParser
 class AndroidCoverageCheckPlugin implements Plugin<Project> {
 
     private static final String TASK_NAME_TYPE = "androidCoverageCheck";
-    private static final String DESCRIPTION_TYPE = "Checks coverage reports.";
+    private static final String DESCRIPTION_TYPE = "Check jacoco coverage xml reports.";
     private static final String EXTENSIONS_NAME = "androidCoverageCheck";
 
     @Override
