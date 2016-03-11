@@ -29,6 +29,7 @@ plugins {
   id "org.shikato.gradle.android.coverage.check" version "0.0.5"
 }
 ```
+https://plugins.gradle.org/plugin/org.shikato.gradle.android.coverage.check
 
 ## Usage
 
