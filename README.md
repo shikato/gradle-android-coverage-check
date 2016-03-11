@@ -7,22 +7,27 @@ AndroidCoverageCheck is a gradle plugin to check coverage reports.
 ## Install
 **build.gradle**  
 
-Add a dependency.
+Build script snippet for use in all Gradle versions:
 ```groovy
 buildscript {
-    repositories {
-        maven {
-            url 'https://github.com/shikato/gradle-android-coverage-check/raw/master/repository'
-        }
+  repositories {
+    maven {
+      url "https://plugins.gradle.org/m2/"
     }
-    dependencies {
-        classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.2'
-    }
+  }
+  dependencies {
+    classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.5"
+  }
 }
+
+apply plugin: "org.shikato.gradle.android.coverage.check"
 ```
-Apply this plugin.
-```groovy
-apply plugin: 'android-coverage-check'
+
+Build script snippet for new, incubating, plugin mechanism introduced in Gradle 2.1:
+```
+plugins {
+  id "org.shikato.gradle.android.coverage.check" version "0.0.5"
+}
 ```
 
 ## Usage
