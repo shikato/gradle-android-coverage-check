@@ -4,7 +4,7 @@ AndroidCoverageCheck is a gradle plugin to check coverage reports.
 
 ![demo1](https://qiita-image-store.s3.amazonaws.com/0/47437/27441815-8d99-66cd-c214-02ff383c1ce8.png)
  
-## Install
+## Download
 **build.gradle**  
 
 Build script snippet for use in all Gradle versions:
@@ -85,7 +85,7 @@ androidCoverageCheck {
 
 ```
 
-## Documents
+## Other documents
 [Qiita](http://qiita.com/shikato/items/9869719ab5e22ee9d061)
 
 ## License
