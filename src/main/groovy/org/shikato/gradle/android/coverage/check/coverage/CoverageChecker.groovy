@@ -6,6 +6,15 @@ import org.gradle.api.file.FileVisitDetails
 import org.gradle.api.file.FileVisitor
 import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 
+/**
+ * CoverageChecker.groovy
+ *
+ * Copyright (c) 2016 shikato
+ *
+ * This software is released under the MIT license.
+ * http://opensource.org/licenses/mit-license.html
+ */
+
 class CoverageChecker {
 
     public static Coverage check(Project project, CoverageAll coverageAll,

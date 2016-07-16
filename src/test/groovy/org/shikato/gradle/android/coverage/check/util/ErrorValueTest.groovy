@@ -2,6 +2,15 @@ package org.shikato.gradle.android.coverage.check.util
 
 import org.junit.Test
 
+/**
+ * ErrorValueTest.groovy
+ *
+ * Copyright (c) 2016 shikato
+ *
+ * This software is released under the MIT license.
+ * http://opensource.org/licenses/mit-license.html
+ */
+
 class ErrorValueTest {
 
     @Test
