@@ -9,6 +9,15 @@ import org.shikato.gradle.android.coverage.check.util.ErrorValue
 
 import java.text.NumberFormat
 
+/**
+ * CoverageTableLog.groovy
+ *
+ * Copyright (c) 2016 shikato
+ *
+ * This software is released under the MIT license.
+ * http://opensource.org/licenses/mit-license.html
+ */
+
 class CoverageTableLog {
 
     private static final String INSTRUCTION = "  % INSTR ";

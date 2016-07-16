@@ -1,7 +1,14 @@
 package org.shikato.gradle.android.coverage.check
 
-// TOOD: もう少しgroovyっぽく書く必要がありそう
-// String[] targets = []; みたいにexcludesを指定しないといけなくなってしまっている、、、
+/**
+ * AndroidCoverageCheckExtension.groovy
+ *
+ * Copyright (c) 2016 shikato
+ *
+ * This software is released under the MIT license.
+ * http://opensource.org/licenses/mit-license.html
+ */
+
 class AndroidCoverageCheckExtension {
 
     private static final String ENTRY_DIR = "entryPointDir";

@@ -11,7 +11,7 @@ def desc = 'Check jacoco coverage xml reports.';
 def name = 'Android Coverage Check Plugin';
 def localRepository = new File(rootDir, './repository')
 
-version = '0.0.5';
+version = '0.0.6';
 group = 'org.shikato.gradle.android.coverage.check';
 
 buildscript{

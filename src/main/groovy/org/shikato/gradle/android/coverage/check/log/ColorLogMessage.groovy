@@ -2,6 +2,15 @@ package org.shikato.gradle.android.coverage.check.log
 
 import org.shikato.gradle.android.coverage.check.util.ErrorValue
 
+/**
+ * ColorLogMessage.groovy
+ *
+ * Copyright (c) 2016 shikato
+ *
+ * This software is released under the MIT license.
+ * http://opensource.org/licenses/mit-license.html
+ */
+
 class ColorLogMessage {
 
     private static final String RELEASE = "\u001b[m";

@@ -3,6 +3,15 @@ package org.shikato.gradle.android.coverage.check.coverage
 import org.junit.Before
 import org.junit.Test
 
+/**
+ * CoverageSourcefileTest.groovy
+ *
+ * Copyright (c) 2016 shikato
+ *
+ * This software is released under the MIT license.
+ * http://opensource.org/licenses/mit-license.html
+ */
+
 class CoverageSourcefileTest {
 
     private CoverageSourcefile mCoverageSourcefile;

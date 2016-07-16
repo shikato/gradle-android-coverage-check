@@ -5,6 +5,15 @@ import org.gradle.api.file.FileTree
 import org.gradle.api.file.FileVisitDetails
 import org.gradle.api.file.FileVisitor
 
+/**
+ * ReportXmlGetter.groovy
+ *
+ * Copyright (c) 2016 shikato
+ *
+ * This software is released under the MIT license.
+ * http://opensource.org/licenses/mit-license.html
+ */
+
 class ReportXmlGetter {
 
     public static List<File> get(Project project, String entryPoint, String[] path) {
