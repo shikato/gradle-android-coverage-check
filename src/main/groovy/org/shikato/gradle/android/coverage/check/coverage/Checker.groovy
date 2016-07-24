@@ -15,7 +15,7 @@ import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageChecker {
+class Checker {
 
     public static Coverage check(Project project, CoverageAll coverageAll,
                                  AndroidCoverageCheckExtension extension) {

@@ -1,7 +1,6 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
 apply plugin: 'jacoco'
-//apply plugin: 'android-coverage-check' // ver 0.0.2
 apply plugin: "org.shikato.gradle.android.coverage.check"
 apply plugin: 'com.gradle.plugin-publish'
 
@@ -11,14 +10,14 @@ def desc = 'Check jacoco coverage xml reports.';
 def name = 'Android Coverage Check Plugin';
 def localRepository = new File(rootDir, './repository')
 
-version = '0.0.6';
+version = '0.0.6.dev';
 group = 'org.shikato.gradle.android.coverage.check';
 
 buildscript{
     dependencies {
-//        classpath 'org.shikato.gradle.android.coverage.check:android-coverage-check:0.0.2' // ver 0.0.2
-        classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.5"
         classpath "com.gradle.publish:plugin-publish-plugin:0.9.3"
+        classpath files('./build/libs/gradle-android-coverage-check-0.0.6.dev.jar')
+//        classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.5"
     }
     repositories {
         jcenter()
@@ -26,9 +25,6 @@ buildscript{
         maven {
             url "https://plugins.gradle.org/m2/"
         }
-//        maven {
-//            url uri('./repository') // ver 0.0.2
-//        }
     }
 }
 
@@ -58,7 +54,8 @@ jacocoTestReport {
     }
 }
 
-String[] reportXmlPath = ["**/jacoco/**/jacocoTestReport.xml"];
+//String[] reportXmlPath = ["**/jacoco/**/jacocoTestReport.xml"];
+String[] reportXmlPath = ["testdata/**/report.xml"];
 
 androidCoverageCheck {
     isBuildFailure false

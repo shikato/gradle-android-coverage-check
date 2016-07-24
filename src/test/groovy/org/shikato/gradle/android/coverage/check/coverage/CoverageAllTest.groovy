@@ -25,7 +25,7 @@ class CoverageAllTest {
     void getterAndSetter() {
         List<CoverageCounter> counterListExpected = new ArrayList<>();
         mCoverageAll.setCounterList(counterListExpected);
-        List<CoverageSourcefile> sourceFileList = new ArrayList<>();
+        List<CoverageClass> sourceFileList = new ArrayList<>();
         mCoverageAll.setSourcefileList(sourceFileList);
         String reportPathExpected = "hoge/report.xml";
         mCoverageAll.setReportPath(reportPathExpected);

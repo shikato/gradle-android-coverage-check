@@ -1,13 +1,12 @@
+.DS_Store
+
 build/
 .gradle/
+local.properties
 
 # IDEA
 .idea
 out/
 *.iml
 *.ipr
-*.iws
-
-local.properties
-
-.DS_Store
+*.iws 
