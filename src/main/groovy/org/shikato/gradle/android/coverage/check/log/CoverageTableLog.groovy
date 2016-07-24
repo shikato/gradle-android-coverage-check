@@ -37,7 +37,7 @@ class CoverageTableLog {
         RED
     }
 
-    private static int TRIM_SIZE = 3;
+    private static int TRIM_SIZE = 1;
 
     private static int maxFileColumnLength = DefaultValue.INT;
     private static int maxInstructionColumnLength = DefaultValue.INT;
@@ -54,7 +54,9 @@ class CoverageTableLog {
 
         coverage.getSourcefileList().each() {
             if (it.getIsExclude()) return;
-            message += getLine(it, extension, " " + it.getPackageName() + " > " + it.getFileName() + " ");
+            String fileName = getShorteningName(it.getFileName());
+            if (fileName ==~ "") return;
+            message += getLine(it, extension, " " + fileName + " ");
         };
 
         message += getBar();
@@ -87,7 +89,7 @@ class CoverageTableLog {
         int difference = target.length() - size;
         // +1はspace
         target = target.substring(difference + TRIM_SIZE + 1, target.length());
-        return " " + "." * TRIM_SIZE + target;
+        return " " + "~" * TRIM_SIZE + target;
     }
 
     private static String getBar() {
@@ -134,7 +136,7 @@ class CoverageTableLog {
         NumberFormat format = NumberFormat.getInstance();
         format.setMaximumFractionDigits(2);
 
-        String file = setColor(padBeforeSpace(
+        String file = setColor(padAfterSpace(
                 trimFileName(fileName,
                         maxFileColumnLength), maxFileColumnLength), fileColor);
 
@@ -169,5 +171,16 @@ class CoverageTableLog {
             return ColorLogMessage.boldYellow(message);
         }
         return ColorLogMessage.boldGreen(message);
+    }
+
+    private static String getShorteningName(String name) {
+        String result = "";
+        (name =~ /(.*?)\//).collect { String all, first ->
+            result += first[0] + ".";
+        }
+        (name =~ /[^\/]*$/).collect { String match ->
+            result += match;
+        }
+        return result;
     }
 }
