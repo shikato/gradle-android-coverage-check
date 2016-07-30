@@ -51,14 +51,14 @@ class ReportXmlParser {
             currentPackageName = it.@name.toString();
 
             it.class.each {
-                if (isTargetClassTag(it.@name.toString())) {
-                    CoverageClass coverage = new CoverageClass();
-                    println(it.@name.toString());
-                    coverage.setPackageName(currentPackageName);
-                    coverage.setFileName(it.@name.toString());
-                    coverage.setCounterList(getCounterList(it.counter));
-                    coverageSourcefileList.add(coverage);
-                }
+                if (!isTargetClassTag(it.@name.toString())) return;
+
+                CoverageClass coverage = new CoverageClass();
+                println(it.@name.toString());
+                coverage.setPackageName(currentPackageName);
+                coverage.setFileName(it.@name.toString());
+                coverage.setCounterList(getCounterList(it.counter));
+                coverageSourcefileList.add(coverage);
             };
         };
 

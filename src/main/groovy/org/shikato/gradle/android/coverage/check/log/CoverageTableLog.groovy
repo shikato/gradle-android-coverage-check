@@ -179,7 +179,7 @@ class CoverageTableLog {
             nameList.add(it);
         }
         String result = "";
-        nameList.eachWithIndex { val,i ->
+        nameList.eachWithIndex { val, i ->
             if (i != (nameList.size() - 1)) {
                 result += val[0] + ".";
             } else {
