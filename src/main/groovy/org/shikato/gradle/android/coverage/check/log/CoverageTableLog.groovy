@@ -174,12 +174,17 @@ class CoverageTableLog {
     }
 
     private static String getShorteningName(String name) {
-        String result = "";
-        (name =~ /(.*?)\//).collect { String all, first ->
-            result += first[0] + ".";
+        List<String> nameList = new ArrayList<>();
+        name.split("/").each {
+            nameList.add(it);
         }
-        (name =~ /[^\/]*$/).collect { String match ->
-            result += match;
+        String result = "";
+        nameList.eachWithIndex { val,i ->
+            if (i != (nameList.size() - 1)) {
+                result += val[0] + ".";
+            } else {
+                result += val;
+            }
         }
         return result;
     }
