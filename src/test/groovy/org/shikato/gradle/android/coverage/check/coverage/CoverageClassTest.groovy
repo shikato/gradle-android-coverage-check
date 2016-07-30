@@ -12,13 +12,13 @@ import org.junit.Test
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageSourcefileTest {
+class CoverageClassTest {
 
-    private CoverageSourcefile mCoverageSourcefile;
+    private CoverageClass mCoverageSourcefile;
 
     @Before
     void before() {
-        mCoverageSourcefile = new CoverageSourcefile();
+        mCoverageSourcefile = new CoverageClass();
     }
 
     @Test

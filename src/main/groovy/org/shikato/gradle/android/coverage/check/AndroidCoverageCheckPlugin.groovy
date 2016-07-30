@@ -4,7 +4,7 @@ import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.shikato.gradle.android.coverage.check.coverage.CoverageAll
-import org.shikato.gradle.android.coverage.check.coverage.CoverageChecker
+import org.shikato.gradle.android.coverage.check.coverage.Checker
 import org.shikato.gradle.android.coverage.check.log.CoverageTableLog
 import org.shikato.gradle.android.coverage.check.xml.ReportXmlGetter
 import org.shikato.gradle.android.coverage.check.xml.ReportXmlParser
@@ -53,7 +53,7 @@ class AndroidCoverageCheckPlugin implements Plugin<Project> {
             if (coverage == null || coverage.getSourcefileList().size() == 0) return;
 
             // checking coverage
-            coverage = CoverageChecker.check(project, coverage, extension);
+            coverage = Checker.check(project, coverage, extension);
 
             // output log
             CoverageTableLog.show(project, coverage, extension);

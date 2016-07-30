@@ -11,7 +11,7 @@ import org.shikato.gradle.android.coverage.check.util.DefaultValue
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageSourcefile implements Coverage {
+class CoverageClass implements Coverage {
 
     String packageName = DefaultValue.STRING;
     String fileName = DefaultValue.STRING;

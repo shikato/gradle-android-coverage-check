@@ -22,7 +22,7 @@ class CoverageAll implements Coverage {
 
     // TODO: packageごとのcoverage
 
-    List<CoverageSourcefile> sourcefileList = new ArrayList<>();
+    List<CoverageClass> sourcefileList = new ArrayList<>();
     List<CoverageCounter> counterList = new ArrayList<>();
 
     @Override
