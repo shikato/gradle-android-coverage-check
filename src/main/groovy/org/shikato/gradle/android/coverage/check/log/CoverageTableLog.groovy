@@ -31,13 +31,13 @@ class CoverageTableLog {
 
     private static final String IGNORE_RATE = "n/a";
 
-    public static enum Color {
+    private static final enum Color {
         GREEN,
         YELLOW,
         RED
     }
 
-    private static int TRIM_SIZE = 1;
+    private static final int TRIM_SIZE = 1;
 
     private static int maxFileColumnLength = DefaultValue.INT;
     private static int maxInstructionColumnLength = DefaultValue.INT;
