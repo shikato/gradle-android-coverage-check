@@ -1,8 +1,8 @@
 # gradle-android-coverage-check
 
-AndroidCoverageCheck is a gradle plugin to check coverage reports.  
+AndroidCoverageCheck is a gradle plugin to check [JaCoCo](http://www.eclemma.org/jacoco/) coverage reports.  
 
-![demo1](https://qiita-image-store.s3.amazonaws.com/0/47437/27441815-8d99-66cd-c214-02ff383c1ce8.png)
+![2016-07-31 21 10 03](https://cloud.githubusercontent.com/assets/4592677/17276406/b7f4547a-5763-11e6-8a8a-cbc36b53ea8a.png)
  
 ## Download
 **build.gradle**  
@@ -16,7 +16,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.5"
+    classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.7"
   }
 }
 
@@ -26,7 +26,7 @@ apply plugin: "org.shikato.gradle.android.coverage.check"
 Build script snippet for new, incubating, plugin mechanism introduced in Gradle 2.1:
 ```
 plugins {
-  id "org.shikato.gradle.android.coverage.check" version "0.0.5"
+  id "org.shikato.gradle.android.coverage.check" version "0.0.7"
 }
 ```
 https://plugins.gradle.org/plugin/org.shikato.gradle.android.coverage.check
@@ -34,7 +34,7 @@ https://plugins.gradle.org/plugin/org.shikato.gradle.android.coverage.check
 ## Usage
 
 ### Task
-* androidCovrageCheck - Checks coverage reports.  
+* androidCovrageCheck - Check JaCoCo coverage reports.  
 
 #### Examples
 ##### Create coverage reports & check
@@ -44,7 +44,7 @@ Only at the time of "org.gradle.parallel=false".
 ```
 
 ##### Only check
-report.xml should have already existed.
+If report.xml already exists.
 ```
 ./gradlew androidCoverageCheck  
 ```
@@ -59,8 +59,8 @@ String[] excludeFiles = ["**/*Activity.java",
                          "**/*Fragment.java",
                          "package/name/**/Shikato2.java"];
 
-// coverage reports path
-// If reports are plural, The task checks each.
+// Coverage reports path
+// If reports are plural, The task each checks.
 // Default: ["**/coverage/**/report.xml"]
 String[] reportXmlPath = ["hoge/fuga/**/report.xml"];
 
@@ -69,17 +69,17 @@ androidCoverageCheck {
     // Default: true
     isBuildFailure false
 
-    // minimum threshold of INSTRUCTION
+    // Minimum threshold of INSTRUCTION
     // Default: 20
     instruction 50
 
-    // minimum threshold of BRANCH
+    // Minimum threshold of BRANCH
     // Default: 20
     branch 50
 
-    // set excluded targets
+    // Set excluded targets
     excludes excludeFiles
-    // set coverage report path
+    // Set coverage report path
     reportXml reportXmlPath
 }
 
