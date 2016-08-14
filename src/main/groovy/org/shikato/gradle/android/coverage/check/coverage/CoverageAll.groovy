@@ -20,8 +20,6 @@ class CoverageAll implements Coverage {
 
     String reportPath = DefaultValue.STRING;
 
-    // TODO: packageごとのcoverage
-
     List<CoverageClass> sourcefileList = new ArrayList<>();
     List<CoverageCounter> counterList = new ArrayList<>();
 

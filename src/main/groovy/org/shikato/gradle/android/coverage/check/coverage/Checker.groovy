@@ -31,7 +31,6 @@ class Checker {
         return checkCoverageCounter(coverageAll, coverageAll, extension, false);
     }
 
-    // TODO: 整理（ALlとsourcefileでoverloadするか、このまま合わせて処理するか）
     private static Coverage checkCoverageCounter(Coverage coverage,
                                                  CoverageAll coverageAll,
                                                  AndroidCoverageCheckExtension extension,
