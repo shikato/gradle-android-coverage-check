@@ -54,7 +54,6 @@ class ReportXmlParser {
                 if (!isTargetClassTag(it.@name.toString())) return;
 
                 CoverageClass coverage = new CoverageClass();
-                println(it.@name.toString());
                 coverage.setPackageName(currentPackageName);
                 coverage.setFileName(it.@name.toString());
                 coverage.setCounterList(getCounterList(it.counter));
