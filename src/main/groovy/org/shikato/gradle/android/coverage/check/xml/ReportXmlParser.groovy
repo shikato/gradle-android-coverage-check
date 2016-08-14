@@ -82,6 +82,6 @@ class ReportXmlParser {
     }
 
     private static boolean isTargetClassTag(String className) {
-        return !(className ==~ /.*\$\d$/)
+        return !(className ==~ /.*\$.*$/)
     }
 }

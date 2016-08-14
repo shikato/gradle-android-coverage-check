@@ -10,13 +10,13 @@ def desc = 'Check jacoco coverage xml reports.';
 def name = 'Android Coverage Check Plugin';
 def localRepository = new File(rootDir, './repository')
 
-version = '0.0.7';
+version = '0.0.7.dev';
 group = 'org.shikato.gradle.android.coverage.check';
 
 buildscript{
     dependencies {
         classpath "com.gradle.publish:plugin-publish-plugin:0.9.3"
-        classpath files('./build/libs/gradle-android-coverage-check-0.0.6.dev.jar')
+        classpath files('./build/libs/gradle-android-coverage-check-0.0.7.dev.jar')
 //        classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.5"
     }
     repositories {
@@ -57,11 +57,15 @@ jacocoTestReport {
 //String[] reportXmlPath = ["**/jacoco/**/jacocoTestReport.xml"];
 String[] reportXmlPath = ["testdata/**/report.xml"];
 
+String[] excludeFiles = ["**/*Activity.java",
+                         "**/*View.java"];
+
 androidCoverageCheck {
     isBuildFailure false
     instruction 80
     branch 80
     reportXml reportXmlPath
+    excludes excludeFiles
 }
 
 pluginBundle {
