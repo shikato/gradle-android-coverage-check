@@ -3,7 +3,7 @@ package org.shikato.gradle.android.coverage.check.log
 import org.gradle.api.Project
 import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 import org.shikato.gradle.android.coverage.check.coverage.Coverage
-import org.shikato.gradle.android.coverage.check.coverage.CoverageAll
+import org.shikato.gradle.android.coverage.check.coverage.All
 import org.shikato.gradle.android.coverage.check.util.DefaultValue
 import org.shikato.gradle.android.coverage.check.util.ErrorValue
 
@@ -43,8 +43,8 @@ class CoverageTableLog {
     private static int maxInstructionColumnLength = DefaultValue.INT;
     private static int maxBranchColumnLength = DefaultValue.INT;
 
-    public static void show(Project project, CoverageAll coverage,
-                           AndroidCoverageCheckExtension extension) {
+    public static void show(Project project, All coverage,
+                            AndroidCoverageCheckExtension extension) {
         setMaxLength();
 
         String message = coverage.getReportPath() + "\n";
@@ -114,9 +114,9 @@ class CoverageTableLog {
         float branchRate = ErrorValue.FLOAT;
 
         coverage.getCounterList().each {
-            if (it.getType() == CoverageAll.INSTRUCTION) {
+            if (it.getType() == All.INSTRUCTION) {
                 instructionRate = it.getRate();
-            } else if (it.getType() == CoverageAll.BRANCH) {
+            } else if (it.getType() == All.BRANCH) {
                 branchRate = it.getRate();
             }
         }

@@ -11,7 +11,7 @@ import org.shikato.gradle.android.coverage.check.util.DefaultValue
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageAll implements Coverage {
+class All implements Coverage {
 
     public static final String INSTRUCTION = "INSTRUCTION";
     public static final String BRANCH = "BRANCH";
@@ -20,16 +20,16 @@ class CoverageAll implements Coverage {
 
     String reportPath = DefaultValue.STRING;
 
-    List<CoverageClass> sourcefileList = new ArrayList<>();
-    List<CoverageCounter> counterList = new ArrayList<>();
+    List<Class> sourcefileList = new ArrayList<>();
+    List<Counter> counterList = new ArrayList<>();
 
     @Override
-    List<CoverageCounter> getCounterList() {
+    List<Counter> getCounterList() {
         return this.counterList;
     }
 
     @Override
-    void setCounterList(List<CoverageCounter> counterList) {
+    void setCounterList(List<Counter> counterList) {
         this.counterList = counterList;
     }
 }

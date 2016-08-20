@@ -11,22 +11,22 @@ import org.shikato.gradle.android.coverage.check.util.DefaultValue
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageClass implements Coverage {
+class Class implements Coverage {
 
     String packageName = DefaultValue.STRING;
     String fileName = DefaultValue.STRING;
 
-    List<CoverageCounter> counterList = new ArrayList<>();
+    List<Counter> counterList = new ArrayList<>();
 
     boolean isExclude = false;
 
     @Override
-    List<CoverageCounter> getCounterList() {
+    List<Counter> getCounterList() {
         return counterList;
     }
 
     @Override
-    void setCounterList(List<CoverageCounter> counterList) {
+    void setCounterList(List<Counter> counterList) {
         this.counterList = counterList
     }
 }

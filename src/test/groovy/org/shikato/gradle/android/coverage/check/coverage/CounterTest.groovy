@@ -12,13 +12,13 @@ import org.junit.Test
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageCounterTest {
+class CounterTest {
 
-    private CoverageCounter mCounter;
+    private Counter mCounter;
 
     @Before
     void before() {
-        mCounter = new CoverageCounter();
+        mCounter = new Counter();
     }
 
     @Test

@@ -17,7 +17,7 @@ import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 
 class Checker {
 
-    public static Coverage check(Project project, CoverageAll coverageAll,
+    public static Coverage check(Project project, All coverageAll,
                                  AndroidCoverageCheckExtension extension) {
 
         List<String> excludes = getExcludes(project, extension.getExcludesEntryDir(),
@@ -26,13 +26,14 @@ class Checker {
         coverageAll.getSourcefileList().each {
             it.setIsExclude(isExclude(excludes, it.getFileName()));
             checkCoverageCounter(it, coverageAll, extension, true);
+            classCount++;
         };
 
         return checkCoverageCounter(coverageAll, coverageAll, extension, false);
     }
 
     private static Coverage checkCoverageCounter(Coverage coverage,
-                                                 CoverageAll coverageAll,
+                                                 All coverageAll,
                                                  AndroidCoverageCheckExtension extension,
                                                  boolean isSetIsHavingUnsatisfiedCoverage) {
         boolean isHavingInstruction = false;
@@ -66,7 +67,7 @@ class Checker {
         return coverage;
     }
 
-    private static boolean isSatisfiedMinimumThreshold(CoverageCounter counter,
+    private static boolean isSatisfiedMinimumThreshold(Counter counter,
                                                        int minimumThreshold) {
         if (Float.compare(getRateOfSatisfiedCoverage(counter), minimumThreshold) < 0) {
             return false;
@@ -74,7 +75,7 @@ class Checker {
         return true;
     }
 
-    private static float getRateOfSatisfiedCoverage(CoverageCounter counter) {
+    private static float getRateOfSatisfiedCoverage(Counter counter) {
         float total = counter.getMissed() + counter.getCovered();
         if (Float.compare(total, 0F) <= 0) return 0F;
         return counter.getCovered() / total * 100;

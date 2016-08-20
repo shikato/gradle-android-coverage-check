@@ -12,18 +12,18 @@ import org.junit.Test
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageClassTest {
+class ClassTest {
 
-    private CoverageClass mCoverageSourcefile;
+    private Class mCoverageSourcefile;
 
     @Before
     void before() {
-        mCoverageSourcefile = new CoverageClass();
+        mCoverageSourcefile = new Class();
     }
 
     @Test
     void getterAndSetter() {
-        List<CoverageCounter> counterListExpected = new ArrayList<>();
+        List<Counter> counterListExpected = new ArrayList<>();
         mCoverageSourcefile.setCounterList(counterListExpected);
         boolean isExcludeExpected = false;
         mCoverageSourcefile.setIsExclude(isExcludeExpected);

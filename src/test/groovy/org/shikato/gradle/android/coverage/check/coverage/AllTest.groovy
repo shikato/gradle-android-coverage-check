@@ -12,20 +12,20 @@ import org.junit.Test
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageAllTest {
+class AllTest {
 
-    private CoverageAll mCoverageAll;
+    private All mCoverageAll;
 
     @Before
     void before() {
-        mCoverageAll = new CoverageAll();
+        mCoverageAll = new All();
     }
 
     @Test
     void getterAndSetter() {
-        List<CoverageCounter> counterListExpected = new ArrayList<>();
+        List<Counter> counterListExpected = new ArrayList<>();
         mCoverageAll.setCounterList(counterListExpected);
-        List<CoverageClass> sourceFileList = new ArrayList<>();
+        List<Class> sourceFileList = new ArrayList<>();
         mCoverageAll.setSourcefileList(sourceFileList);
         String reportPathExpected = "hoge/report.xml";
         mCoverageAll.setReportPath(reportPathExpected);
