@@ -54,11 +54,9 @@ jacocoTestReport {
     }
 }
 
-//String[] reportXmlPath = ["**/jacoco/**/jacocoTestReport.xml"];
-String[] reportXmlPath = ["testdata/**/report.xml"];
-
-String[] excludeFiles = ["**/*Activity.java",
-                         "**/*View.java"];
+String[] reportXmlPath = ["**/jacoco/**/jacocoTestReport.xml"];
+//String[] reportXmlPath = ["testdata/**/report.xml"];
+String[] excludeFiles = [];
 
 androidCoverageCheck {
     isBuildFailure false
