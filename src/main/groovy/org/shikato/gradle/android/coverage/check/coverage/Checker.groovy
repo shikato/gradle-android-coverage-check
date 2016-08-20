@@ -50,9 +50,9 @@ class Checker {
                 if (isSetIsHavingUnsatisfiedCoverage) {
                     coverageAll.setIsHavingUnsatisfiedCoverage(true);
                 }
-                it.setIsSatisfied(false)
+                it.setIsSatisfied(false);
             } else {
-                it.setIsSatisfied(true)
+                it.setIsSatisfied(true);
             }
 
             it.setRate(getRateOfSatisfiedCoverage(it));

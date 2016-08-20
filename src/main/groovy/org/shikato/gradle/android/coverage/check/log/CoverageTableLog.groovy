@@ -87,7 +87,6 @@ class CoverageTableLog {
     private static String trimFileName(String target, int size) {
         if (target.length() <= size) return target;
         int difference = target.length() - size;
-        // +1はspace
         target = target.substring(difference + TRIM_SIZE + 1, target.length());
         return " " + "~" * TRIM_SIZE + target;
     }
