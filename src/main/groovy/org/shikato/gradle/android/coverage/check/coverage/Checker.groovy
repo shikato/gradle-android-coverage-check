@@ -19,19 +19,18 @@ class Checker {
 
     public static Coverage check(Project project, CoverageAll coverageAll,
                                  AndroidCoverageCheckExtension extension) {
+
         List<String> excludes = getExcludes(project, extension.getExcludesEntryDir(),
                 extension.getExcludesPath());
 
         coverageAll.getSourcefileList().each {
-            it.setIsExclude(isExclude(excludes,
-                    it.getPackageName() + "/" + it.getFileName()));
+            it.setIsExclude(isExclude(excludes, it.getFileName()));
             checkCoverageCounter(it, coverageAll, extension, true);
         };
 
         return checkCoverageCounter(coverageAll, coverageAll, extension, false);
     }
 
-    // TODO: 整理（ALlとsourcefileでoverloadするか、このまま合わせて処理するか）
     private static Coverage checkCoverageCounter(Coverage coverage,
                                                  CoverageAll coverageAll,
                                                  AndroidCoverageCheckExtension extension,
@@ -102,8 +101,14 @@ class Checker {
                 void visitFile(FileVisitDetails fileDetails) {
                     File file = project.file(fileDetails.getFile());
                     if (!file.exists()) return;
-                    if (excludes.contains(file.getPath())) return;
-                    excludes.add(file.getPath());
+
+                    String filePath = file.getPath()
+                    if (filePath == null) return;
+                    if (excludes.contains(filePath)) return;
+
+                    int point = filePath.lastIndexOf(".");
+                    if (point == -1) return;
+                    excludes.add(filePath.substring(0, point));
                 }
             });
         }
