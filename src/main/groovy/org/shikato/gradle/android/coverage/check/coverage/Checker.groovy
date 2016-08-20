@@ -23,7 +23,7 @@ class Checker {
         List<String> excludes = getExcludes(project, extension.getExcludesEntryDir(),
                 extension.getExcludesPath());
 
-        coverageAll.getSourcefileList().each {
+        coverageAll.getClassList().each {
             it.setIsExclude(isExclude(excludes, it.getFileName()));
             checkCoverageCounter(it, coverageAll, extension, true);
             classCount++;

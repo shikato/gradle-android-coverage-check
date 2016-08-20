@@ -62,7 +62,7 @@ class ReportXmlParser {
         };
 
         All coverage = new All();
-        coverage.setSourcefileList(coverageSourcefileList);
+        coverage.setClassList(coverageSourcefileList);
         coverage.setCounterList(getCounterList(node.counter));
 
         return coverage;

@@ -52,7 +52,7 @@ class CoverageTableLog {
         message += getTitle();
         message += getBar();
 
-        coverage.getSourcefileList().each() {
+        coverage.getClassList().each() {
             if (it.getIsExclude()) return;
             String fileName = getShorteningName(it.getFileName());
             if (fileName ==~ "") return;

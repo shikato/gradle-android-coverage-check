@@ -20,7 +20,7 @@ class All implements Coverage {
 
     String reportPath = DefaultValue.STRING;
 
-    List<Class> sourcefileList = new ArrayList<>();
+    List<Class> classList = new ArrayList<>();
     List<Counter> counterList = new ArrayList<>();
 
     @Override

@@ -50,7 +50,7 @@ class AndroidCoverageCheckPlugin implements Plugin<Project> {
             // parsing report.xml
             All coverage = ReportXmlParser.parse(project, it.text);
             coverage.setReportPath(it.path);
-            if (coverage == null || coverage.getSourcefileList().size() == 0) return;
+            if (coverage == null || coverage.getClassList().size() == 0) return;
 
             // checking coverage
             coverage = Checker.check(project, coverage, extension);

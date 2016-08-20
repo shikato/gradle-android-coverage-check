@@ -26,11 +26,11 @@ class AllTest {
         List<Counter> counterListExpected = new ArrayList<>();
         mCoverageAll.setCounterList(counterListExpected);
         List<Class> sourceFileList = new ArrayList<>();
-        mCoverageAll.setSourcefileList(sourceFileList);
+        mCoverageAll.setClassList(sourceFileList);
         String reportPathExpected = "hoge/report.xml";
         mCoverageAll.setReportPath(reportPathExpected);
 
-        assert mCoverageAll.getSourcefileList() == sourceFileList;
+        assert mCoverageAll.getClassList() == sourceFileList;
         assert mCoverageAll.getCounterList() == counterListExpected;
         assert mCoverageAll.getReportPath() == reportPathExpected;
     }
