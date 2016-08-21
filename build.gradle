@@ -10,14 +10,14 @@ def desc = 'Check jacoco coverage xml reports.';
 def name = 'Android Coverage Check Plugin';
 def localRepository = new File(rootDir, './repository')
 
-version = '0.0.8.dev';
+version = '0.0.9';
 group = 'org.shikato.gradle.android.coverage.check';
 
 buildscript{
     dependencies {
         classpath "com.gradle.publish:plugin-publish-plugin:0.9.3"
-        classpath files('./build/libs/gradle-android-coverage-check-0.0.8.dev.jar')
-//        classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.8"
+        classpath files('./build/libs/gradle-android-coverage-check-0.0.9.dev.jar')
+//        classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.9"
     }
     repositories {
         jcenter()
@@ -57,9 +57,7 @@ jacocoTestReport {
 String[] reportXmlPath = ["**/jacoco/**/jacocoTestReport.xml"];
 //String[] reportXmlPath = ["testdata/**/report.xml"];
 //String[] excludeFiles = [];
-//String[] excludeFiles = ["**/ReportXmlGetter.groovy", "**/ReportXmlParser.groovy", "**/CoverageTableLog.groovy", "**/AndroidCoverage*.groovy", "**/Sourcefile.groovy", "**/Checker.groovy"];
-String[] excludeFiles = ["**/ReportXmlGetter.groovy", "**/ReportXmlParser.groovy", "**/CoverageTableLog.groovy", "**/AndroidCoverage*.groovy", "**/Checker.groovy"];
-//String[] excludeFiles = ["**/*.groovy"];
+String[] excludeFiles = ["**/ReportXmlGetter.groovy", "**/ReportXmlParser.groovy", "**/CoverageTableLog.groovy", "**/AndroidCoverage*.groovy", "**/Sourcefile.groovy", "**/Checker.groovy"];
 
 androidCoverageCheck {
     isBuildFailure true

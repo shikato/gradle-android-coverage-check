@@ -70,9 +70,9 @@ class Checker {
 
             if (!(coverage instanceof Class) || ((Class) coverage).isExclude) return;
             if (it.getType() == Coverage.INSTRUCTION) {
-                increaseAllCounter(allInstructionCounter, it)
+                increaseAllCounter(allInstructionCounter, it);
             } else if (it.getType() == Coverage.BRANCH) {
-                increaseAllCounter(allBranchCounter, it)
+                increaseAllCounter(allBranchCounter, it);
             }
         }
 
