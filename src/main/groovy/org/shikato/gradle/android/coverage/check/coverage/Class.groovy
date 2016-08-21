@@ -14,8 +14,8 @@ import org.shikato.gradle.android.coverage.check.util.DefaultValue
 class Class implements Coverage {
 
     String packageName = DefaultValue.STRING;
-    String fileName = DefaultValue.STRING;
-
+    String className = DefaultValue.STRING;
+    boolean isTarget = false;
     List<Counter> counterList = new ArrayList<>();
 
     boolean isExclude = false;

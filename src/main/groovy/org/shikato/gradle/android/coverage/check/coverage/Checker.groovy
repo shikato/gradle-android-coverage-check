@@ -24,9 +24,8 @@ class Checker {
                 extension.getExcludesPath());
 
         coverageAll.getClassList().each {
-            it.setIsExclude(isExclude(excludes, it.getFileName()));
+            it.setIsExclude(isExclude(excludes, it.getClassName()));
             checkCoverageCounter(it, coverageAll, extension, true);
-            classCount++;
         };
 
         return checkCoverageCounter(coverageAll, coverageAll, extension, false);

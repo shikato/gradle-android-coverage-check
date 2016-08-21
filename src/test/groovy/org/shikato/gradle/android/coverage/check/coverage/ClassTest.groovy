@@ -28,13 +28,13 @@ class ClassTest {
         boolean isExcludeExpected = false;
         mCoverageSourcefile.setIsExclude(isExcludeExpected);
         String fileNameExpected = "shikatoFileName";
-        mCoverageSourcefile.setFileName(fileNameExpected);
+        mCoverageSourcefile.setClassName(fileNameExpected);
         String packageNameExpected = "shikatoPackageName";
         mCoverageSourcefile.setPackageName(packageNameExpected)
 
         assert mCoverageSourcefile.getCounterList() == counterListExpected;
         assert mCoverageSourcefile.getIsExclude() == isExcludeExpected;
-        assert mCoverageSourcefile.getFileName() == fileNameExpected;
+        assert mCoverageSourcefile.getClassName() == fileNameExpected;
         assert mCoverageSourcefile.getPackageName() == packageNameExpected;
     }
 }
