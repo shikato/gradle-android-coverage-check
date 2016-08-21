@@ -7,7 +7,7 @@ import org.gradle.api.file.FileVisitor
 import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 
 /**
- * CoverageChecker.groovy
+ * Checker.groovy
  *
  * Copyright (c) 2016 shikato
  *
@@ -17,29 +17,37 @@ import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 
 class Checker {
 
-    public static Coverage check(Project project, All coverageAll,
+    private static Counter allInstructionsCounter = null;
+    private static Counter allBranchCounter = null;
+
+    public synchronized static Coverage check(Project project, All coverageAll,
                                  AndroidCoverageCheckExtension extension) {
+        allInstructionsCounter = new Counter();
+        allBranchCounter = new Counter();
 
         List<String> excludes = getExcludes(project, extension.getExcludesEntryDir(),
                 extension.getExcludesPath());
 
         coverageAll.getClassList().each {
-            it.setIsExclude(isExclude(excludes, it.getClassName()));
-            checkCoverageCounter(it, coverageAll, extension, true);
+            String classNameExceptDollar = getClassNameExceptDollar(it.getClassName());
+            it.isTarget = it.getClassName() == classNameExceptDollar;
+            it.isExclude = isExclude(excludes, classNameExceptDollar);
+            checkCoverageCounter(it, coverageAll, extension, false);
         };
 
-        return checkCoverageCounter(coverageAll, coverageAll, extension, false);
+        List<Counter> allCounterList = new ArrayList<>();
+        allCounterList.add(allInstructionsCounter);
+        allCounterList.add(allBranchCounter);
+        coverageAll.setCounterList(allCounterList);
+
+        return checkCoverageCounter(coverageAll, coverageAll, extension, true);
     }
 
     private static Coverage checkCoverageCounter(Coverage coverage,
                                                  All coverageAll,
                                                  AndroidCoverageCheckExtension extension,
-                                                 boolean isSetIsHavingUnsatisfiedCoverage) {
-        boolean isHavingInstruction = false;
-        boolean isHavingBranch = false;
-
+                                                 boolean isAll) {
         coverage.getCounterList().each {
-            // 現状はINSTRUCTIONとBRANCHのみ
             if (it.getType() != Coverage.INSTRUCTION &&
                     it.getType() !=
                     Coverage.BRANCH) {
@@ -47,8 +55,8 @@ class Checker {
             }
 
             if (!isSatisfiedMinimumThreshold(it, extension.getInstruction())) {
-                if (isSetIsHavingUnsatisfiedCoverage) {
-                    coverageAll.setIsHavingUnsatisfiedCoverage(true);
+                if (!isAll) {
+                    coverageAll.setHasUnsatisfiedCoverage(true);
                 }
                 it.setIsSatisfied(false);
             } else {
@@ -57,9 +65,13 @@ class Checker {
 
             it.setRate(getRateOfSatisfiedCoverage(it));
             if (it.getType() == Coverage.INSTRUCTION) {
-                isHavingInstruction = true;
+                if (!isAll && !((Class)coverage).isExclude) {
+                    increaseAllCounter(allInstructionsCounter, it)
+                };
             } else if (it.getType() == Coverage.BRANCH) {
-                isHavingBranch = true;
+                if (!isAll && !((Class)coverage).isExclude) {
+                    increaseAllCounter(allBranchCounter, it)
+                };
             }
         }
 
@@ -80,9 +92,17 @@ class Checker {
         return counter.getCovered() / total * 100;
     }
 
+    private static void increaseAllCounter(Counter base, Counter target) {
+        base.setType(target.getType());
+        base.missed += target.missed;
+        base.covered += target.covered;
+    }
+
     private static boolean isExclude(List<String> excludes, String path) {
         for (String exclude : excludes) {
-            if (exclude.lastIndexOf(path) != -1) return true;
+            if (exclude.lastIndexOf(path) != -1) {
+                return true;
+            }
         }
         return false;
     }
@@ -106,13 +126,23 @@ class Checker {
                     if (filePath == null) return;
                     if (excludes.contains(filePath)) return;
 
-                    int point = filePath.lastIndexOf(".");
-                    if (point == -1) return;
-                    excludes.add(filePath.substring(0, point));
+                    excludes.add(getClassNameExceptExtension(filePath))
                 }
             });
         }
 
         return excludes;
+    }
+
+    private static getClassNameExceptDollar(String className) {
+        int point = className.indexOf("\$");
+        if (point != -1) return className.substring(0, point);
+        return className;
+    }
+
+    private static getClassNameExceptExtension(String className) {
+        int point = className.lastIndexOf(".");
+        if (point != -1) return className.substring(0, point);
+        return className;
     }
 }

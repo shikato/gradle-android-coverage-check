@@ -3,7 +3,7 @@ package org.shikato.gradle.android.coverage.check.coverage
 import org.shikato.gradle.android.coverage.check.util.DefaultValue
 
 /**
- * CoverageSourcefile.groovy
+ * Class.groovy
  *
  * Copyright (c) 2016 shikato
  *
@@ -16,9 +16,8 @@ class Class implements Coverage {
     String packageName = DefaultValue.STRING;
     String className = DefaultValue.STRING;
     boolean isTarget = false;
-    List<Counter> counterList = new ArrayList<>();
-
     boolean isExclude = false;
+    List<Counter> counterList = new ArrayList<>();
 
     @Override
     List<Counter> getCounterList() {

@@ -3,7 +3,7 @@ package org.shikato.gradle.android.coverage.check.coverage
 import org.shikato.gradle.android.coverage.check.util.DefaultValue
 
 /**
- * CoverageAll.groovy
+ * All.groovy
  *
  * Copyright (c) 2016 shikato
  *
@@ -16,7 +16,7 @@ class All implements Coverage {
     public static final String INSTRUCTION = "INSTRUCTION";
     public static final String BRANCH = "BRANCH";
 
-    boolean isHavingUnsatisfiedCoverage = false;
+    boolean hasUnsatisfiedCoverage = false;
 
     String reportPath = DefaultValue.STRING;
 

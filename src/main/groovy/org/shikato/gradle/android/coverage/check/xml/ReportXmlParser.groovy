@@ -54,7 +54,6 @@ class ReportXmlParser {
 
             it.class.each {
                 Class coverage = new Class();
-                coverage.isTarget = isTargetClassTag(it.@name.toString());
                 coverage.setPackageName(currentPackageName);
                 coverage.setClassName(it.@name.toString());
                 coverage.setCounterList(getCounterList(it.counter));
@@ -88,9 +87,5 @@ class ReportXmlParser {
             counterList.add(counter);
         }
         return counterList;
-    }
-
-    private static boolean isTargetClassTag(String className) {
-        return !(className ==~ /.*\$.*$/)
     }
 }
