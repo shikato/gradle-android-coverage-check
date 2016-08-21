@@ -88,7 +88,7 @@ class CoverageTableLog {
         if (target.length() <= size) return target;
         int difference = target.length() - size;
         target = target.substring(difference + TRIM_SIZE + 1, target.length());
-        return " " + "~" * TRIM_SIZE + target;
+        return " " + "≈" * TRIM_SIZE + target;
     }
 
     private static String getBar() {
