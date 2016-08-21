@@ -3,7 +3,7 @@ package org.shikato.gradle.android.coverage.check.log
 import org.gradle.api.Project
 import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 import org.shikato.gradle.android.coverage.check.coverage.Coverage
-import org.shikato.gradle.android.coverage.check.coverage.CoverageAll
+import org.shikato.gradle.android.coverage.check.coverage.All
 import org.shikato.gradle.android.coverage.check.util.DefaultValue
 import org.shikato.gradle.android.coverage.check.util.ErrorValue
 
@@ -43,8 +43,8 @@ class CoverageTableLog {
     private static int maxInstructionColumnLength = DefaultValue.INT;
     private static int maxBranchColumnLength = DefaultValue.INT;
 
-    public static void show(Project project, CoverageAll coverage,
-                           AndroidCoverageCheckExtension extension) {
+    public static void show(Project project, All coverage,
+                            AndroidCoverageCheckExtension extension) {
         setMaxLength();
 
         String message = coverage.getReportPath() + "\n";
@@ -52,9 +52,9 @@ class CoverageTableLog {
         message += getTitle();
         message += getBar();
 
-        coverage.getSourcefileList().each() {
-            if (it.getIsExclude()) return;
-            String fileName = getShorteningName(it.getFileName());
+        coverage.getClassList().each() {
+            if (it.isExclude || !it.isTarget) return;
+            String fileName = getShorteningName(it.getClassName());
             if (fileName ==~ "") return;
             message += getLine(it, extension, " " + fileName + " ");
         };
@@ -87,9 +87,8 @@ class CoverageTableLog {
     private static String trimFileName(String target, int size) {
         if (target.length() <= size) return target;
         int difference = target.length() - size;
-        // +1はspace
         target = target.substring(difference + TRIM_SIZE + 1, target.length());
-        return " " + "~" * TRIM_SIZE + target;
+        return " " + "≈" * TRIM_SIZE + target;
     }
 
     private static String getBar() {
@@ -115,9 +114,9 @@ class CoverageTableLog {
         float branchRate = ErrorValue.FLOAT;
 
         coverage.getCounterList().each {
-            if (it.getType() == CoverageAll.INSTRUCTION) {
+            if (it.getType() == All.INSTRUCTION) {
                 instructionRate = it.getRate();
-            } else if (it.getType() == CoverageAll.BRANCH) {
+            } else if (it.getType() == All.BRANCH) {
                 branchRate = it.getRate();
             }
         }
@@ -142,16 +141,19 @@ class CoverageTableLog {
 
         String instruction;
         if (Float.compare(instructionRate, ErrorValue.FLOAT) == 0) {
-            instruction = setColor(padBeforeSpace(IGNORE_RATE, maxInstructionColumnLength), instructionColor);
+            instruction =
+                    setColor(padBeforeSpace(IGNORE_RATE, maxInstructionColumnLength), instructionColor);
         } else {
-            instruction = setColor(padBeforeSpace(format.format(instructionRate), maxInstructionColumnLength), instructionColor);
+            instruction = setColor(padBeforeSpace(
+                    format.format(instructionRate), maxInstructionColumnLength), instructionColor);
         }
 
         String branch;
         if (Float.compare(branchRate, ErrorValue.FLOAT) == 0) {
             branch = setColor(padBeforeSpace(IGNORE_RATE, maxBranchColumnLength), branchColor);
         } else {
-            branch = setColor(padBeforeSpace(format.format(branchRate), maxBranchColumnLength), branchColor);
+            branch = setColor(padBeforeSpace(
+                    format.format(branchRate), maxBranchColumnLength), branchColor);
         }
 
         return file + "|" + instruction + "|" + branch + "|" + "\n";
@@ -159,8 +161,13 @@ class CoverageTableLog {
     }
 
     private static Color getColorType(float rate, int threshold) {
-        if (Float.compare(rate, ErrorValue.FLOAT) == 0 || threshold < 0 || Float.compare(rate, threshold) >= 0) return Color.GREEN;
-        if (Float.compare((float) (rate / threshold), 0.5F) > 0) return Color.YELLOW;
+        if (Float.compare(rate, ErrorValue.FLOAT) == 0
+                || threshold < 0 || Float.compare(rate, threshold) >= 0) {
+            return Color.GREEN
+        };
+        if (Float.compare((float) (rate / threshold), 0.5F) > 0) {
+            return Color.YELLOW
+        };
         return Color.RED;
     }
 

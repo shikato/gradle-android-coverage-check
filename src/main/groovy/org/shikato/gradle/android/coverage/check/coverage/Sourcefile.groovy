@@ -3,7 +3,7 @@ package org.shikato.gradle.android.coverage.check.coverage
 import org.shikato.gradle.android.coverage.check.util.DefaultValue
 
 /**
- * CoverageSourcefile.groovy
+ * Sourcefile.groovy
  *
  * Copyright (c) 2016 shikato
  *
@@ -11,22 +11,19 @@ import org.shikato.gradle.android.coverage.check.util.DefaultValue
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageClass implements Coverage {
+public class Sourcefile implements Coverage {
 
     String packageName = DefaultValue.STRING;
     String fileName = DefaultValue.STRING;
-
-    List<CoverageCounter> counterList = new ArrayList<>();
-
-    boolean isExclude = false;
+    List<Counter> counterList = new ArrayList<>();
 
     @Override
-    List<CoverageCounter> getCounterList() {
+    public List<Counter> getCounterList() {
         return counterList;
     }
 
     @Override
-    void setCounterList(List<CoverageCounter> counterList) {
-        this.counterList = counterList
+    public void setCounterList(List<Counter> counterList) {
+        this.counterList = counterList;
     }
 }

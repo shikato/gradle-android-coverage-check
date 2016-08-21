@@ -3,7 +3,7 @@ package org.shikato.gradle.android.coverage.check.coverage
 import org.shikato.gradle.android.coverage.check.util.DefaultValue
 
 /**
- * CoverageCounter.groovy
+ * Counter.groovy
  *
  * Copyright (c) 2016 shikato
  *
@@ -11,7 +11,7 @@ import org.shikato.gradle.android.coverage.check.util.DefaultValue
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageCounter {
+class Counter {
 
     String type = DefaultValue.STRING;
     int missed = DefaultValue.INT;

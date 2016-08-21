@@ -7,7 +7,7 @@ import org.gradle.api.file.FileVisitor
 import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 
 /**
- * CoverageChecker.groovy
+ * Checker.groovy
  *
  * Copyright (c) 2016 shikato
  *
@@ -17,29 +17,36 @@ import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 
 class Checker {
 
-    public static Coverage check(Project project, CoverageAll coverageAll,
-                                 AndroidCoverageCheckExtension extension) {
+    private static Counter allInstructionCounter = null;
+    private static Counter allBranchCounter = null;
+
+    public synchronized static Coverage check(Project project, All coverageAll,
+                                              AndroidCoverageCheckExtension extension) {
+        allInstructionCounter = new Counter();
+        allBranchCounter = new Counter();
 
         List<String> excludes = getExcludes(project, extension.getExcludesEntryDir(),
                 extension.getExcludesPath());
 
-        coverageAll.getSourcefileList().each {
-            it.setIsExclude(isExclude(excludes, it.getFileName()));
-            checkCoverageCounter(it, coverageAll, extension, true);
+        coverageAll.getClassList().each {
+            String classNameExceptDollar = getClassNameExceptDollar(it.getClassName());
+            it.isTarget = it.getClassName() == classNameExceptDollar;
+            it.isExclude = isExclude(excludes, classNameExceptDollar);
+            checkCoverageCounter(it, coverageAll, extension);
         };
 
-        return checkCoverageCounter(coverageAll, coverageAll, extension, false);
+        List<Counter> allCounterList = new ArrayList<>();
+        allCounterList.add(allInstructionCounter);
+        allCounterList.add(allBranchCounter);
+        coverageAll.setCounterList(allCounterList);
+
+        return checkCoverageCounter(coverageAll, coverageAll, extension);
     }
 
     private static Coverage checkCoverageCounter(Coverage coverage,
-                                                 CoverageAll coverageAll,
-                                                 AndroidCoverageCheckExtension extension,
-                                                 boolean isSetIsHavingUnsatisfiedCoverage) {
-        boolean isHavingInstruction = false;
-        boolean isHavingBranch = false;
-
+                                                 All coverageAll,
+                                                 AndroidCoverageCheckExtension extension) {
         coverage.getCounterList().each {
-            // 現状はINSTRUCTIONとBRANCHのみ
             if (it.getType() != Coverage.INSTRUCTION &&
                     it.getType() !=
                     Coverage.BRANCH) {
@@ -47,26 +54,32 @@ class Checker {
             }
 
             if (!isSatisfiedMinimumThreshold(it, extension.getInstruction())) {
-                if (isSetIsHavingUnsatisfiedCoverage) {
-                    coverageAll.setIsHavingUnsatisfiedCoverage(true);
+                if (coverage instanceof Class
+                        && !((Class) coverage).isExclude
+                        && ((Class) coverage).isTarget) {
+                    coverageAll.hasUnsatisfiedCoverage = true;
+                } else if (coverage instanceof All) {
+                    coverageAll.hasUnsatisfiedCoverage = true;
                 }
-                it.setIsSatisfied(false)
+                it.isSatisfied = false;
             } else {
-                it.setIsSatisfied(true)
+                it.isSatisfied = true;
             }
 
             it.setRate(getRateOfSatisfiedCoverage(it));
+
+            if (!(coverage instanceof Class) || ((Class) coverage).isExclude) return;
             if (it.getType() == Coverage.INSTRUCTION) {
-                isHavingInstruction = true;
+                increaseAllCounter(allInstructionCounter, it);
             } else if (it.getType() == Coverage.BRANCH) {
-                isHavingBranch = true;
+                increaseAllCounter(allBranchCounter, it);
             }
         }
 
         return coverage;
     }
 
-    private static boolean isSatisfiedMinimumThreshold(CoverageCounter counter,
+    private static boolean isSatisfiedMinimumThreshold(Counter counter,
                                                        int minimumThreshold) {
         if (Float.compare(getRateOfSatisfiedCoverage(counter), minimumThreshold) < 0) {
             return false;
@@ -74,15 +87,23 @@ class Checker {
         return true;
     }
 
-    private static float getRateOfSatisfiedCoverage(CoverageCounter counter) {
+    private static float getRateOfSatisfiedCoverage(Counter counter) {
         float total = counter.getMissed() + counter.getCovered();
         if (Float.compare(total, 0F) <= 0) return 0F;
         return counter.getCovered() / total * 100;
     }
 
+    private static void increaseAllCounter(Counter base, Counter target) {
+        base.setType(target.getType());
+        base.missed += target.missed;
+        base.covered += target.covered;
+    }
+
     private static boolean isExclude(List<String> excludes, String path) {
         for (String exclude : excludes) {
-            if (exclude.lastIndexOf(path) != -1) return true;
+            if (exclude.lastIndexOf(path) != -1) {
+                return true;
+            }
         }
         return false;
     }
@@ -106,13 +127,23 @@ class Checker {
                     if (filePath == null) return;
                     if (excludes.contains(filePath)) return;
 
-                    int point = filePath.lastIndexOf(".");
-                    if (point == -1) return;
-                    excludes.add(filePath.substring(0, point));
+                    excludes.add(getClassNameExceptExtension(filePath))
                 }
             });
         }
 
         return excludes;
+    }
+
+    private static getClassNameExceptDollar(String className) {
+        int point = className.indexOf("\$");
+        if (point != -1) return className.substring(0, point);
+        return className;
+    }
+
+    private static getClassNameExceptExtension(String className) {
+        int point = className.lastIndexOf(".");
+        if (point != -1) return className.substring(0, point);
+        return className;
     }
 }

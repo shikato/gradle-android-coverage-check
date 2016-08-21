@@ -2,9 +2,10 @@ package org.shikato.gradle.android.coverage.check.xml
 
 import groovy.util.slurpersupport.GPathResult
 import org.gradle.api.Project
-import org.shikato.gradle.android.coverage.check.coverage.CoverageAll
-import org.shikato.gradle.android.coverage.check.coverage.CoverageCounter
-import org.shikato.gradle.android.coverage.check.coverage.CoverageClass
+import org.shikato.gradle.android.coverage.check.coverage.All
+import org.shikato.gradle.android.coverage.check.coverage.Class
+import org.shikato.gradle.android.coverage.check.coverage.Counter
+import org.shikato.gradle.android.coverage.check.coverage.Sourcefile
 import org.shikato.gradle.android.coverage.check.util.DefaultValue
 
 /**
@@ -18,7 +19,7 @@ import org.shikato.gradle.android.coverage.check.util.DefaultValue
 
 class ReportXmlParser {
 
-    public static CoverageAll parse(Project project, String xmlReport) {
+    public static All parse(Project project, String xmlReport) {
 
         XmlSlurper parser = new XmlSlurper(false, false, true);
         if (parser == null) {
@@ -33,7 +34,7 @@ class ReportXmlParser {
             return null
         };
 
-        CoverageAll coverage = parseReportXml(node);
+        All coverage = parseReportXml(node);
         if (coverage == null) {
             project.logger.warn "Failed parsing xml";
             return null
@@ -42,45 +43,49 @@ class ReportXmlParser {
         return coverage;
     }
 
-    private static CoverageAll parseReportXml(GPathResult node) {
+    private static All parseReportXml(GPathResult node) {
 
-        List<CoverageClass> coverageSourcefileList = new ArrayList<>();
+        List<Class> classList = new ArrayList<>();
+        List<Sourcefile> sourcefileList = new ArrayList<>();
         String currentPackageName = DefaultValue.STRING;
 
         node.package.each {
             currentPackageName = it.@name.toString();
 
             it.class.each {
-                if (!isTargetClassTag(it.@name.toString())) return;
+                Class coverage = new Class();
+                coverage.setPackageName(currentPackageName);
+                coverage.setClassName(it.@name.toString());
+                coverage.setCounterList(getCounterList(it.counter));
+                classList.add(coverage);
+            };
 
-                CoverageClass coverage = new CoverageClass();
+            it.sourcefile.each {
+                Sourcefile coverage = new Sourcefile();
                 coverage.setPackageName(currentPackageName);
                 coverage.setFileName(it.@name.toString());
                 coverage.setCounterList(getCounterList(it.counter));
-                coverageSourcefileList.add(coverage);
+                sourcefileList.add(coverage);
             };
         };
 
-        CoverageAll coverage = new CoverageAll();
-        coverage.setSourcefileList(coverageSourcefileList);
+        All coverage = new All();
+        coverage.setClassList(classList);
+        coverage.setSourcefileList(sourcefileList);
         coverage.setCounterList(getCounterList(node.counter));
 
         return coverage;
     }
 
     private static getCounterList(GPathResult node) {
-        List<CoverageCounter> counterList = new ArrayList<>();
+        List<Counter> counterList = new ArrayList<>();
         node.each {
-            CoverageCounter counter = new CoverageCounter();
+            Counter counter = new Counter();
             counter.setType(it.@type.toString());
             counter.setMissed(Integer.parseInt(it.@missed.toString()));
             counter.setCovered(Integer.parseInt(it.@covered.toString()));
             counterList.add(counter);
         }
         return counterList;
-    }
-
-    private static boolean isTargetClassTag(String className) {
-        return !(className ==~ /.*\$.*$/)
     }
 }

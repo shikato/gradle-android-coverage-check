@@ -4,7 +4,7 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * CoverageSourcefileTest.groovy
+ * ClassTest.groovy
  *
  * Copyright (c) 2016 shikato
  *
@@ -12,29 +12,29 @@ import org.junit.Test
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageClassTest {
+class ClassTest {
 
-    private CoverageClass mCoverageSourcefile;
+    private Class mCoverageSourcefile;
 
     @Before
     void before() {
-        mCoverageSourcefile = new CoverageClass();
+        mCoverageSourcefile = new Class();
     }
 
     @Test
     void getterAndSetter() {
-        List<CoverageCounter> counterListExpected = new ArrayList<>();
+        List<Counter> counterListExpected = new ArrayList<>();
         mCoverageSourcefile.setCounterList(counterListExpected);
         boolean isExcludeExpected = false;
         mCoverageSourcefile.setIsExclude(isExcludeExpected);
         String fileNameExpected = "shikatoFileName";
-        mCoverageSourcefile.setFileName(fileNameExpected);
+        mCoverageSourcefile.setClassName(fileNameExpected);
         String packageNameExpected = "shikatoPackageName";
         mCoverageSourcefile.setPackageName(packageNameExpected)
 
         assert mCoverageSourcefile.getCounterList() == counterListExpected;
         assert mCoverageSourcefile.getIsExclude() == isExcludeExpected;
-        assert mCoverageSourcefile.getFileName() == fileNameExpected;
+        assert mCoverageSourcefile.getClassName() == fileNameExpected;
         assert mCoverageSourcefile.getPackageName() == packageNameExpected;
     }
 }

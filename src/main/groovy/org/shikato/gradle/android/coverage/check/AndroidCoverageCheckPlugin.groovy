@@ -3,7 +3,7 @@ package org.shikato.gradle.android.coverage.check
 import org.gradle.api.GradleException
 import org.gradle.api.Plugin
 import org.gradle.api.Project
-import org.shikato.gradle.android.coverage.check.coverage.CoverageAll
+import org.shikato.gradle.android.coverage.check.coverage.All
 import org.shikato.gradle.android.coverage.check.coverage.Checker
 import org.shikato.gradle.android.coverage.check.log.CoverageTableLog
 import org.shikato.gradle.android.coverage.check.xml.ReportXmlGetter
@@ -48,9 +48,9 @@ class AndroidCoverageCheckPlugin implements Plugin<Project> {
         reportXmlList.each {
 
             // parsing report.xml
-            CoverageAll coverage = ReportXmlParser.parse(project, it.text);
+            All coverage = ReportXmlParser.parse(project, it.text);
             coverage.setReportPath(it.path);
-            if (coverage == null || coverage.getSourcefileList().size() == 0) return;
+            if (coverage == null || coverage.getClassList().size() == 0) return;
 
             // checking coverage
             coverage = Checker.check(project, coverage, extension);
@@ -58,8 +58,8 @@ class AndroidCoverageCheckPlugin implements Plugin<Project> {
             // output log
             CoverageTableLog.show(project, coverage, extension);
 
-            // isHavingUnsatisfiedCoverage && isBuidFailure → failure build
-            if (coverage.getIsHavingUnsatisfiedCoverage() && extension.isBuildFailure) {
+            // hasUnsatisfiedCoverage && isBuildFailure → failure build
+            if (coverage.hasUnsatisfiedCoverage && extension.isBuildFailure) {
                 throw new GradleException("Coverage did not satisfy the minimum threshold.");
             }
         }

@@ -3,7 +3,7 @@ package org.shikato.gradle.android.coverage.check.coverage
 import org.shikato.gradle.android.coverage.check.util.DefaultValue
 
 /**
- * CoverageAll.groovy
+ * All.groovy
  *
  * Copyright (c) 2016 shikato
  *
@@ -11,25 +11,26 @@ import org.shikato.gradle.android.coverage.check.util.DefaultValue
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageAll implements Coverage {
+class All implements Coverage {
 
     public static final String INSTRUCTION = "INSTRUCTION";
     public static final String BRANCH = "BRANCH";
 
-    boolean isHavingUnsatisfiedCoverage = false;
+    boolean hasUnsatisfiedCoverage = false;
 
     String reportPath = DefaultValue.STRING;
 
-    List<CoverageClass> sourcefileList = new ArrayList<>();
-    List<CoverageCounter> counterList = new ArrayList<>();
+    List<Class> classList = new ArrayList<>();
+    List<Sourcefile> sourcefileList = new ArrayList<>();
+    List<Counter> counterList = new ArrayList<>();
 
     @Override
-    List<CoverageCounter> getCounterList() {
+    List<Counter> getCounterList() {
         return this.counterList;
     }
 
     @Override
-    void setCounterList(List<CoverageCounter> counterList) {
+    void setCounterList(List<Counter> counterList) {
         this.counterList = counterList;
     }
 }

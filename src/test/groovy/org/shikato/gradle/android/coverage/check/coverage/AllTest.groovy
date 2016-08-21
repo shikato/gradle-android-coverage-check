@@ -4,7 +4,7 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * CoverageAllTest.groovy
+ * AllTest.groovy
  *
  * Copyright (c) 2016 shikato
  *
@@ -12,25 +12,25 @@ import org.junit.Test
  * http://opensource.org/licenses/mit-license.html
  */
 
-class CoverageAllTest {
+class AllTest {
 
-    private CoverageAll mCoverageAll;
+    private All mCoverageAll;
 
     @Before
     void before() {
-        mCoverageAll = new CoverageAll();
+        mCoverageAll = new All();
     }
 
     @Test
     void getterAndSetter() {
-        List<CoverageCounter> counterListExpected = new ArrayList<>();
+        List<Counter> counterListExpected = new ArrayList<>();
         mCoverageAll.setCounterList(counterListExpected);
-        List<CoverageClass> sourceFileList = new ArrayList<>();
-        mCoverageAll.setSourcefileList(sourceFileList);
+        List<Class> sourceFileList = new ArrayList<>();
+        mCoverageAll.setClassList(sourceFileList);
         String reportPathExpected = "hoge/report.xml";
         mCoverageAll.setReportPath(reportPathExpected);
 
-        assert mCoverageAll.getSourcefileList() == sourceFileList;
+        assert mCoverageAll.getClassList() == sourceFileList;
         assert mCoverageAll.getCounterList() == counterListExpected;
         assert mCoverageAll.getReportPath() == reportPathExpected;
     }
