@@ -17,12 +17,12 @@ import org.shikato.gradle.android.coverage.check.AndroidCoverageCheckExtension
 
 class Checker {
 
-    private static Counter allInstructionsCounter = null;
+    private static Counter allInstructionCounter = null;
     private static Counter allBranchCounter = null;
 
     public synchronized static Coverage check(Project project, All coverageAll,
                                  AndroidCoverageCheckExtension extension) {
-        allInstructionsCounter = new Counter();
+        allInstructionCounter = new Counter();
         allBranchCounter = new Counter();
 
         List<String> excludes = getExcludes(project, extension.getExcludesEntryDir(),
@@ -36,7 +36,7 @@ class Checker {
         };
 
         List<Counter> allCounterList = new ArrayList<>();
-        allCounterList.add(allInstructionsCounter);
+        allCounterList.add(allInstructionCounter);
         allCounterList.add(allBranchCounter);
         coverageAll.setCounterList(allCounterList);
 
@@ -56,7 +56,7 @@ class Checker {
 
             if (!isSatisfiedMinimumThreshold(it, extension.getInstruction())) {
                 if (!isAll) {
-                    coverageAll.setHasUnsatisfiedCoverage(true);
+                    coverageAll.hasUnsatisfiedCoverage = true;
                 }
                 it.setIsSatisfied(false);
             } else {
@@ -66,7 +66,7 @@ class Checker {
             it.setRate(getRateOfSatisfiedCoverage(it));
             if (it.getType() == Coverage.INSTRUCTION) {
                 if (!isAll && !((Class)coverage).isExclude) {
-                    increaseAllCounter(allInstructionsCounter, it)
+                    increaseAllCounter(allInstructionCounter, it)
                 };
             } else if (it.getType() == Coverage.BRANCH) {
                 if (!isAll && !((Class)coverage).isExclude) {

@@ -59,7 +59,7 @@ class AndroidCoverageCheckPlugin implements Plugin<Project> {
             CoverageTableLog.show(project, coverage, extension);
 
             // hasUnsatisfiedCoverage && isBuildFailure → failure build
-            if (coverage.getHasUnsatisfiedCoverage() && extension.isBuildFailure) {
+            if (coverage.hasUnsatisfiedCoverage && extension.isBuildFailure) {
                 throw new GradleException("Coverage did not satisfy the minimum threshold.");
             }
         }
