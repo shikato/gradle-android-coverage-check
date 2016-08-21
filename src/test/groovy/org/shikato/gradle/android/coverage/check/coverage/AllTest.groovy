@@ -4,7 +4,7 @@ import org.junit.Before
 import org.junit.Test
 
 /**
- * CoverageAllTest.groovy
+ * AllTest.groovy
  *
  * Copyright (c) 2016 shikato
  *
