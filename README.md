@@ -16,7 +16,7 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.8"
+    classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.9"
   }
 }
 
@@ -26,7 +26,7 @@ apply plugin: "org.shikato.gradle.android.coverage.check"
 Build script snippet for new, incubating, plugin mechanism introduced in Gradle 2.1:
 ```
 plugins {
-  id "org.shikato.gradle.android.coverage.check" version "0.0.8"
+  id "org.shikato.gradle.android.coverage.check" version "0.0.9"
 }
 ```
 https://plugins.gradle.org/plugin/org.shikato.gradle.android.coverage.check
