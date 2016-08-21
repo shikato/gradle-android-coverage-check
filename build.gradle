@@ -57,11 +57,12 @@ jacocoTestReport {
 String[] reportXmlPath = ["**/jacoco/**/jacocoTestReport.xml"];
 //String[] reportXmlPath = ["testdata/**/report.xml"];
 //String[] excludeFiles = [];
-String[] excludeFiles = ["**/ReportXmlGetter.groovy", "**/ReportXmlParser.groovy", "**/CoverageTableLog.groovy"];
+//String[] excludeFiles = ["**/ReportXmlGetter.groovy", "**/ReportXmlParser.groovy", "**/CoverageTableLog.groovy", "**/AndroidCoverage*.groovy", "**/Sourcefile.groovy", "**/Checker.groovy"];
+String[] excludeFiles = ["**/ReportXmlGetter.groovy", "**/ReportXmlParser.groovy", "**/CoverageTableLog.groovy", "**/AndroidCoverage*.groovy", "**/Checker.groovy"];
 //String[] excludeFiles = ["**/*.groovy"];
 
 androidCoverageCheck {
-    isBuildFailure false
+    isBuildFailure true
     instruction 80
     branch 80
     reportXml reportXmlPath

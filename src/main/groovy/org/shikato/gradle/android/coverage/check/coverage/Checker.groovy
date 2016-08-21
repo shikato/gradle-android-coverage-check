@@ -21,7 +21,7 @@ class Checker {
     private static Counter allBranchCounter = null;
 
     public synchronized static Coverage check(Project project, All coverageAll,
-                                 AndroidCoverageCheckExtension extension) {
+                                              AndroidCoverageCheckExtension extension) {
         allInstructionCounter = new Counter();
         allBranchCounter = new Counter();
 
@@ -32,7 +32,7 @@ class Checker {
             String classNameExceptDollar = getClassNameExceptDollar(it.getClassName());
             it.isTarget = it.getClassName() == classNameExceptDollar;
             it.isExclude = isExclude(excludes, classNameExceptDollar);
-            checkCoverageCounter(it, coverageAll, extension, false);
+            checkCoverageCounter(it, coverageAll, extension);
         };
 
         List<Counter> allCounterList = new ArrayList<>();
@@ -40,13 +40,12 @@ class Checker {
         allCounterList.add(allBranchCounter);
         coverageAll.setCounterList(allCounterList);
 
-        return checkCoverageCounter(coverageAll, coverageAll, extension, true);
+        return checkCoverageCounter(coverageAll, coverageAll, extension);
     }
 
     private static Coverage checkCoverageCounter(Coverage coverage,
                                                  All coverageAll,
-                                                 AndroidCoverageCheckExtension extension,
-                                                 boolean isAll) {
+                                                 AndroidCoverageCheckExtension extension) {
         coverage.getCounterList().each {
             if (it.getType() != Coverage.INSTRUCTION &&
                     it.getType() !=
@@ -55,23 +54,25 @@ class Checker {
             }
 
             if (!isSatisfiedMinimumThreshold(it, extension.getInstruction())) {
-                if (!isAll) {
+                if (coverage instanceof Class
+                        && !((Class) coverage).isExclude
+                        && ((Class) coverage).isTarget) {
+                    coverageAll.hasUnsatisfiedCoverage = true;
+                } else if (coverage instanceof All) {
                     coverageAll.hasUnsatisfiedCoverage = true;
                 }
-                it.setIsSatisfied(false);
+                it.isSatisfied = false;
             } else {
-                it.setIsSatisfied(true);
+                it.isSatisfied = true;
             }
 
             it.setRate(getRateOfSatisfiedCoverage(it));
+
+            if (!(coverage instanceof Class) || ((Class) coverage).isExclude) return;
             if (it.getType() == Coverage.INSTRUCTION) {
-                if (!isAll && !((Class)coverage).isExclude) {
-                    increaseAllCounter(allInstructionCounter, it)
-                };
+                increaseAllCounter(allInstructionCounter, it)
             } else if (it.getType() == Coverage.BRANCH) {
-                if (!isAll && !((Class)coverage).isExclude) {
-                    increaseAllCounter(allBranchCounter, it)
-                };
+                increaseAllCounter(allBranchCounter, it)
             }
         }
 

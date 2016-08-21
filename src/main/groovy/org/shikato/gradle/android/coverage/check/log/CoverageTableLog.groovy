@@ -141,16 +141,19 @@ class CoverageTableLog {
 
         String instruction;
         if (Float.compare(instructionRate, ErrorValue.FLOAT) == 0) {
-            instruction = setColor(padBeforeSpace(IGNORE_RATE, maxInstructionColumnLength), instructionColor);
+            instruction =
+                    setColor(padBeforeSpace(IGNORE_RATE, maxInstructionColumnLength), instructionColor);
         } else {
-            instruction = setColor(padBeforeSpace(format.format(instructionRate), maxInstructionColumnLength), instructionColor);
+            instruction = setColor(padBeforeSpace(
+                    format.format(instructionRate), maxInstructionColumnLength), instructionColor);
         }
 
         String branch;
         if (Float.compare(branchRate, ErrorValue.FLOAT) == 0) {
             branch = setColor(padBeforeSpace(IGNORE_RATE, maxBranchColumnLength), branchColor);
         } else {
-            branch = setColor(padBeforeSpace(format.format(branchRate), maxBranchColumnLength), branchColor);
+            branch = setColor(padBeforeSpace(
+                    format.format(branchRate), maxBranchColumnLength), branchColor);
         }
 
         return file + "|" + instruction + "|" + branch + "|" + "\n";
@@ -158,8 +161,13 @@ class CoverageTableLog {
     }
 
     private static Color getColorType(float rate, int threshold) {
-        if (Float.compare(rate, ErrorValue.FLOAT) == 0 || threshold < 0 || Float.compare(rate, threshold) >= 0) return Color.GREEN;
-        if (Float.compare((float) (rate / threshold), 0.5F) > 0) return Color.YELLOW;
+        if (Float.compare(rate, ErrorValue.FLOAT) == 0
+                || threshold < 0 || Float.compare(rate, threshold) >= 0) {
+            return Color.GREEN
+        };
+        if (Float.compare((float) (rate / threshold), 0.5F) > 0) {
+            return Color.YELLOW
+        };
         return Color.RED;
     }
 
