@@ -1,6 +1,6 @@
 # gradle-android-coverage-check
 
-AndroidCoverageCheck is a gradle plugin to check [JaCoCo](http://www.eclemma.org/jacoco/) coverage reports.  
+AndroidCoverageCheck is Gradle plugin to check [JaCoCo](http://www.eclemma.org/jacoco/) coverage reports.  
 
 ![2016-07-31 21 10 03](https://cloud.githubusercontent.com/assets/4592677/17276406/b7f4547a-5763-11e6-8a8a-cbc36b53ea8a.png)
  
