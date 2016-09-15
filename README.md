@@ -23,12 +23,6 @@ buildscript {
 apply plugin: "org.shikato.gradle.android.coverage.check"
 ```
 
-Build script snippet for new, incubating, plugin mechanism introduced in Gradle 2.1:
-```
-plugins {
-  id "org.shikato.gradle.android.coverage.check" version "0.0.9"
-}
-```
 https://plugins.gradle.org/plugin/org.shikato.gradle.android.coverage.check
 
 ## Usage
