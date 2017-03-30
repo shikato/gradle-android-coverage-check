@@ -28,8 +28,10 @@ class AndroidCoverageCheckPlugin implements Plugin<Project> {
     void apply(Project project) {
         project.extensions.create(EXTENSIONS_NAME, AndroidCoverageCheckExtension);
 
-        project.task(TASK_NAME_TYPE, description: DESCRIPTION_TYPE) << {
-            androidCoverageCheck(project);
+        project.task(TASK_NAME_TYPE, description: DESCRIPTION_TYPE) {
+            doLast {
+              androidCoverageCheck(project);
+            }
         }
     }
 
