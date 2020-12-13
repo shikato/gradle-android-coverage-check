@@ -10,14 +10,14 @@ def desc = 'Check jacoco coverage xml reports.';
 def name = 'Android Coverage Check Plugin';
 def localRepository = new File(rootDir, './repository')
 
-version = '0.0.10';
+version = '1.0.0';
 group = 'org.shikato.gradle.android.coverage.check';
 
 buildscript{
     dependencies {
-        classpath "com.gradle.publish:plugin-publish-plugin:0.9.3"
-        classpath files('./build/libs/gradle-android-coverage-check-0.0.10.jar')
-//        classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.10"
+        classpath "com.gradle.publish:plugin-publish-plugin:0.12.0"
+        classpath files('./build/libs/gradle-android-coverage-check-1.0.0.jar')
+//          classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.10"
     }
     repositories {
         jcenter()
