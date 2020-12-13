@@ -29,6 +29,7 @@ class AndroidCoverageCheckPlugin implements Plugin<Project> {
         project.extensions.create(EXTENSIONS_NAME, AndroidCoverageCheckExtension);
 
         project.task(TASK_NAME_TYPE, description: DESCRIPTION_TYPE) {
+            mustRunAfter 'createDebugCoverageReport'
             doLast {
               androidCoverageCheck(project);
             }
