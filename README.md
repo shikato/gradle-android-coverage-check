@@ -1,10 +1,10 @@
 # gradle-android-coverage-check
 
-AndroidCoverageCheck is Gradle plugin to check [JaCoCo](http://www.eclemma.org/jacoco/) coverage reports.  
+AndroidCoverageCheck is Gradle plugin to check [JaCoCo](https://www.eclemma.org/jacoco/) coverage reports.  
 
 ![2016-07-31 21 10 03](https://cloud.githubusercontent.com/assets/4592677/17276406/b7f4547a-5763-11e6-8a8a-cbc36b53ea8a.png)
  
-## Download
+## Getting started
 **build.gradle**  
 
 Build script snippet for use in all Gradle versions:
@@ -16,29 +16,28 @@ buildscript {
     }
   }
   dependencies {
-    classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:0.0.9"
+    classpath "gradle.plugin.org.shikato.gradle.android.coverage.check:gradle-android-coverage-check:1.0.0"
   }
 }
 
 apply plugin: "org.shikato.gradle.android.coverage.check"
 ```
 
-https://plugins.gradle.org/plugin/org.shikato.gradle.android.coverage.check
+cf. https://plugins.gradle.org/plugin/org.shikato.gradle.android.coverage.check
 
 ## Usage
 
 ### Task
 * androidCovrageCheck - Check JaCoCo coverage reports.  
 
-#### Examples
+#### e.g.
 ##### Create coverage reports & check
-Only at the time of "org.gradle.parallel=false".
 ```
 ./gradlew createDebugCoverageReport androidCoverageCheck  
 ```
+cf. [createDebugCoverageReport](https://developer.android.com/studio/releases/gradle-plugin)
 
-##### Only check
-If report.xml already exists.
+##### Check coverage reports only
 ```
 ./gradlew androidCoverageCheck  
 ```
