@@ -7,7 +7,6 @@ AndroidCoverageCheck is Gradle plugin to check [JaCoCo](https://www.eclemma.org/
 ## Getting started
 **build.gradle**  
 
-Build script snippet for use in all Gradle versions:
 ```groovy
 buildscript {
   repositories {
@@ -46,21 +45,22 @@ cf. [createDebugCoverageReport](https://developer.android.com/studio/releases/gr
 **build.gradle**
 
 ```groovy
-// Excluded targets
+// to exclude files
 // Default: []
 String[] excludeFiles = ["**/*Activity.java",
                          "**/*Fragment.java",
                          "package/name/**/Shikato2.java"];
 
-// Coverage reports path
-// If reports are plural, The task each checks.
+// paths of coverage reports 
 // Default: ["**/coverage/**/report.xml"]
 String[] reportXmlPath = ["hoge/fuga/**/report.xml"];
 
 androidCoverageCheck {
-    // If there are unsatisfied coverages, this option will make a build failure.
-    // Default: true
-    isBuildFailure false
+    // Set excludeFiles variable
+    excludes excludeFiles
+    
+    // Set reportXmlPath variable
+    reportXml reportXmlPath
 
     // Minimum threshold of INSTRUCTION
     // Default: 20
@@ -70,10 +70,9 @@ androidCoverageCheck {
     // Default: 20
     branch 50
 
-    // Set excluded targets
-    excludes excludeFiles
-    // Set coverage report path
-    reportXml reportXmlPath
+    // If the threshold cannot be met, this option will cause the build to fail.
+    // Default: true
+    isBuildFailure false
 }
 
 ```
